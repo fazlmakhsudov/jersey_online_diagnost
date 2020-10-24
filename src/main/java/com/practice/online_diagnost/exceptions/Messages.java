@@ -92,7 +92,7 @@ public final class Messages {
     // medic entity exceptions
     public static final String ERR_CANNOT_INSERT_MEDIC = "Cannot insert new medic";
     public static final String ERR_CANNOT_OBTAIN_MEDIC_BY_ID = "Cannot obtain a medic by its id";
-    public static final String ERR_CANNOT_OBTAIN_MEDIC_BY_NAME = "Cannot obtain a medic by its name";
+    public static final String ERR_CANNOT_OBTAIN_MEDIC_BY_SPECIALIZATION = "Cannot obtain a medic by its name";
     public static final String ERR_CANNOT_UPDATE_MEDIC = "Cannot update a medic";
     public static final String ERR_CANNOT_DELETE_MEDIC = "Cannot delete new medic";
     public static final String ERR_CANNOT_READ_ALL_MEDICS = "Cannot read all medics";

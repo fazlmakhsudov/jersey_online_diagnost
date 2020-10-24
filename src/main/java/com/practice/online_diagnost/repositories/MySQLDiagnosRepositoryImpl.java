@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class MySQLDiagnostRepositoryImpl implements DiagnosRepository {
+public class MySQLDiagnosRepositoryImpl implements DiagnosRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLDiagnosRepository");
 
 

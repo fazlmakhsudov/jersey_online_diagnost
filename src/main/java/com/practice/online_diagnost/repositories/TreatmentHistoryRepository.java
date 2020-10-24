@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface TreatmentHistoryRepository extends BaseRepository<TreatmentHistoryEntity> {
 
-    List<TreatmentHistoryEntity> readForPatients(int patientsId, Connection con) throws RepositoryException;
+    TreatmentHistoryEntity readForPatients(int patientsId, Connection con) throws RepositoryException;
 
 }

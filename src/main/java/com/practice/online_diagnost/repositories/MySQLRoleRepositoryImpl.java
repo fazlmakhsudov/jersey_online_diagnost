@@ -49,9 +49,6 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_ID);
             throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_ID, e);
         }
-        if (role == null) {
-            return null;
-        }
         return role;
     }
 
@@ -73,9 +70,6 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_NAME);
             throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_NAME, e);
-        }
-        if (role == null) {
-            return null;
         }
         return role;
     }
