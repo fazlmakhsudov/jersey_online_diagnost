@@ -15,6 +15,12 @@ public class RoleDomainBuilder {
                 .build();
     }
 
+    public List<RoleDomain> create2(List<RoleRequestModel> roleRequestModelList) {
+        return roleRequestModelList.stream()
+                .map(this::create)
+                .collect(Collectors.toList());
+    }
+
     public RoleDomain create(RoleEntity roleEntity) {
         return RoleDomain.builder()
                 .id(roleEntity.getId())

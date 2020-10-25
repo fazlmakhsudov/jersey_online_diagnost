@@ -2,7 +2,6 @@ package com.practice.online_diagnost.repositories;
 
 
 import com.practice.online_diagnost.exceptions.RepositoryException;
-import com.practice.online_diagnost.repositories.entities.AssignmentEntity;
 import com.practice.online_diagnost.repositories.entities.DiagnosEntity;
 
 import java.sql.Connection;

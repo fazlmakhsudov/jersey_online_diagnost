@@ -15,5 +15,5 @@ public class MedicRequestModel {
     private int id;
     private String specialization;
     private List<AssignmentRequestModel> assignments;
-    private UserRequestModel userDomain;
+    private UserRequestModel user;
 }

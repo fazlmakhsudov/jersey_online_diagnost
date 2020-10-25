@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLMedicRepositoryImpl implements MedicRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLMedicRepository");
 
-  
+
     @Override
     public int create(MedicEntity medic, Connection con) throws RepositoryException {
         final String query = "INSERT INTO medics (specialization) VALUES (?);";
@@ -32,7 +32,7 @@ public class MySQLMedicRepositoryImpl implements MedicRepository {
 
     @Override
     public MedicEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM medics WHERE id = ?;";
+        final String query = "SELECT * FROM medics WHERE id = ?;";
         MedicEntity medic = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -46,14 +46,14 @@ public class MySQLMedicRepositoryImpl implements MedicRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_ID, e);
         }
         return medic;
     }
 
     @Override
     public MedicEntity read(String specialization, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM medics WHERE specialization = ?;";
+        final String query = "SELECT * FROM medics WHERE specialization = ?;";
         MedicEntity medic = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, specialization);
@@ -68,7 +68,7 @@ public class MySQLMedicRepositoryImpl implements MedicRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_SPECIALIZATION);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_SPECIALIZATION, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_MEDIC_BY_SPECIALIZATION, e);
         }
         return medic;
     }
@@ -97,7 +97,7 @@ public class MySQLMedicRepositoryImpl implements MedicRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_MEDIC);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_MEDIC, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_MEDIC, e);
         }
         return rowDeleted;
     }

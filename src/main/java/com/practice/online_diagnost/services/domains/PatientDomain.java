@@ -1,6 +1,5 @@
 package com.practice.online_diagnost.services.domains;
 
-import com.practice.online_diagnost.repositories.entities.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

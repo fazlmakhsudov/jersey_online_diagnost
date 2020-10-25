@@ -1,9 +1,7 @@
 package com.practice.online_diagnost.repositories.entities.builders;
 
 
-import com.practice.online_diagnost.repositories.entities.RoleEntity;
 import com.practice.online_diagnost.repositories.entities.UserEntity;
-import com.practice.online_diagnost.services.domains.RoleDomain;
 import com.practice.online_diagnost.services.domains.UserDomain;
 
 import java.util.List;
@@ -25,6 +23,7 @@ public class UserEntityBuilder {
                 .updatedDate(userDomain.getUpdatedDate())
                 .build();
     }
+
     public List<UserEntity> create(List<UserDomain> userDomainList) {
         return userDomainList.stream()
                 .map(this::create)

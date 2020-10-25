@@ -1,6 +1,5 @@
 package com.practice.online_diagnost.api.resources.v1;
 
-import com.practice.online_diagnost.api.filters.Secured;
 import com.practice.online_diagnost.api.models.RoleRequestModel;
 import com.practice.online_diagnost.api.models.RoleResponseModel;
 import com.practice.online_diagnost.api.models.builders.RoleResponseModelBuilder;
@@ -25,11 +24,11 @@ import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
 @Path("/role")
 public class RoleResource {
     private static final Logger LOG = Logger.getLogger("RoleResourse");
-     private final RoleService roleService = (RoleService) ServiceFactory.createService(ServiceType.ROLE_SERVICE);
+    private final RoleService roleService = (RoleService) ServiceFactory.createService(ServiceType.ROLE_SERVICE);
     private final RoleResponseModelBuilder roleResponseModelBuilder = new RoleResponseModelBuilder();
     private final RoleDomainBuilder roleDomainBuilder = new RoleDomainBuilder();
 
-//    @Secured
+    //    @Secured
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,7 +76,7 @@ public class RoleResource {
                 Response.ok(roleResponseModelBuilder.create(roleDomain)).build();
     }
 
-//    @Secured
+    //    @Secured
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -94,7 +93,7 @@ public class RoleResource {
 //        return flag ? Response.ok().build() : Response.serverError().build();
     }
 
-//    @Secured
+    //    @Secured
     @DELETE
     @Path("{id}")
     public Response deleteRole(@PathParam("id") int id) {
@@ -106,7 +105,7 @@ public class RoleResource {
             LOG.severe(e.getMessage());
             message = e.getMessage();
         }
-        return flag ? Response.ok().build() : Response.status(NOT_IMPLEMENTED.getStatusCode(),message).build();
+        return flag ? Response.ok().build() : Response.status(NOT_IMPLEMENTED.getStatusCode(), message).build();
 //        return flag ? Response.ok().build() : Response.serverError().build();
     }
 }

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLAssignmentRepositoryImpl implements AssignmentRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLAssignmentRepository");
 
-  
+
     @Override
     public int create(AssignmentEntity assignment, Connection con) throws RepositoryException {
         final String query = "INSERT INTO assignments (name, diagnoses_id, medics_id) VALUES (?,?,?);";
@@ -34,7 +34,7 @@ public class MySQLAssignmentRepositoryImpl implements AssignmentRepository {
 
     @Override
     public AssignmentEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM assignments WHERE id = ?;";
+        final String query = "SELECT * FROM assignments WHERE id = ?;";
         AssignmentEntity assignment = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -53,14 +53,14 @@ public class MySQLAssignmentRepositoryImpl implements AssignmentRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_ID, e);
         }
         return assignment;
     }
 
     @Override
     public AssignmentEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM assignments WHERE name = ?;";
+        final String query = "SELECT * FROM assignments WHERE name = ?;";
         AssignmentEntity assignment = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -79,7 +79,7 @@ public class MySQLAssignmentRepositoryImpl implements AssignmentRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ASSIGNMENT_BY_NAME, e);
         }
         return assignment;
     }
@@ -167,7 +167,7 @@ public class MySQLAssignmentRepositoryImpl implements AssignmentRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_ASSIGNMENT);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_ASSIGNMENT, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_ASSIGNMENT, e);
         }
         return rowDeleted;
     }

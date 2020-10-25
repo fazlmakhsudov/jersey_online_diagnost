@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLTreatmentHistoryRepository");
 
-  
+
     @Override
     public int create(TreatmentHistoryEntity treatmentHistory, Connection con) throws RepositoryException {
         final String query = "INSERT INTO treatment_histories (patients_id) VALUES (?);";
@@ -32,7 +32,7 @@ public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepo
 
     @Override
     public TreatmentHistoryEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM treatment_histories WHERE id = ?;";
+        final String query = "SELECT * FROM treatment_histories WHERE id = ?;";
         TreatmentHistoryEntity treatmentHistory = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -48,7 +48,7 @@ public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepo
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID, e);
         }
         return treatmentHistory;
     }
@@ -77,7 +77,7 @@ public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepo
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_TREATMENTHISTORY);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_TREATMENTHISTORY, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_TREATMENTHISTORY, e);
         }
         return rowDeleted;
     }
@@ -124,7 +124,7 @@ public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepo
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_TREATMENTHISTORY_BY_ID, e);
         }
         return treatmentHistory;
     }

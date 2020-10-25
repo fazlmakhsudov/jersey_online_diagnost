@@ -8,7 +8,8 @@ import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.OptionalInt;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -58,13 +59,13 @@ public class DBManager {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-           LOGGER.severe(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
         return connection;
     }
 
 
-    public  static void releaseConnection(Connection connection) {
+    public static void releaseConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException throwables) {

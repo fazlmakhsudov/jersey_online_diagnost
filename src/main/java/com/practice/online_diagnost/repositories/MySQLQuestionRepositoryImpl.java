@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLQuestionRepositoryImpl implements QuestionRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLQuestionRepository");
 
-  
+
     @Override
     public int create(QuestionEntity question, Connection con) throws RepositoryException {
         final String query = "INSERT INTO questions (name, answer, questionaries_id) VALUES (?,?,?);";
@@ -34,7 +34,7 @@ public class MySQLQuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public QuestionEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM questions WHERE id = ?;";
+        final String query = "SELECT * FROM questions WHERE id = ?;";
         QuestionEntity question = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -53,14 +53,14 @@ public class MySQLQuestionRepositoryImpl implements QuestionRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_ID, e);
         }
         return question;
     }
 
     @Override
     public QuestionEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM questions WHERE name = ?;";
+        final String query = "SELECT * FROM questions WHERE name = ?;";
         QuestionEntity question = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -79,7 +79,7 @@ public class MySQLQuestionRepositoryImpl implements QuestionRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTION_BY_NAME, e);
         }
         return question;
     }
@@ -113,7 +113,6 @@ public class MySQLQuestionRepositoryImpl implements QuestionRepository {
     }
 
 
-
     @Override
     public boolean update(QuestionEntity question, Connection con) throws RepositoryException {
         final String query = "UPDATE questions SET name = ?, answer = ?, questionaries_id = ? WHERE id = ?;";
@@ -141,7 +140,7 @@ public class MySQLQuestionRepositoryImpl implements QuestionRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_QUESTION);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_QUESTION, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_QUESTION, e);
         }
         return rowDeleted;
     }

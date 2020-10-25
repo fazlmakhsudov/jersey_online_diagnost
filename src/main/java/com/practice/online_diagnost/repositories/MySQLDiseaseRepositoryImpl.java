@@ -4,7 +4,6 @@ package com.practice.online_diagnost.repositories;
 import com.practice.online_diagnost.exceptions.Messages;
 import com.practice.online_diagnost.exceptions.RepositoryException;
 import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
-import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLDiseaseRepositoryImpl implements DiseaseRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLDiseaseRepository");
 
-  
+
     @Override
     public int create(DiseaseEntity disease, Connection con) throws RepositoryException {
         final String query = "INSERT INTO diseases (name) VALUES (?);";
@@ -33,7 +32,7 @@ public class MySQLDiseaseRepositoryImpl implements DiseaseRepository {
 
     @Override
     public DiseaseEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM diseases WHERE id = ?;";
+        final String query = "SELECT * FROM diseases WHERE id = ?;";
         DiseaseEntity disease = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -49,14 +48,14 @@ public class MySQLDiseaseRepositoryImpl implements DiseaseRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_ID, e);
         }
         return disease;
     }
 
     @Override
     public DiseaseEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM diseases WHERE name = ?;";
+        final String query = "SELECT * FROM diseases WHERE name = ?;";
         DiseaseEntity disease = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -72,7 +71,7 @@ public class MySQLDiseaseRepositoryImpl implements DiseaseRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_DISEASE_BY_NAME, e);
         }
 
         return disease;
@@ -102,7 +101,7 @@ public class MySQLDiseaseRepositoryImpl implements DiseaseRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_DISEASE);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_DISEASE, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_DISEASE, e);
         }
         return rowDeleted;
     }

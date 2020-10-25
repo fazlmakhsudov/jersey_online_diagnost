@@ -1,8 +1,8 @@
 package com.practice.online_diagnost.repositories;
 
 
-import com.practice.online_diagnost.exceptions.RepositoryException;
 import com.practice.online_diagnost.exceptions.Messages;
+import com.practice.online_diagnost.exceptions.RepositoryException;
 import com.practice.online_diagnost.repositories.entities.RoleEntity;
 
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLRoleRepositoryImpl implements RoleRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLRoleRepository");
 
-  
+
     @Override
     public int create(RoleEntity role, Connection con) throws RepositoryException {
         final String query = "INSERT INTO roles (name) VALUES (?);";
@@ -32,7 +32,7 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
 
     @Override
     public RoleEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM roles WHERE id = ?;";
+        final String query = "SELECT * FROM roles WHERE id = ?;";
         RoleEntity role = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -47,14 +47,14 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_ID, e);
         }
         return role;
     }
 
     @Override
     public RoleEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM roles WHERE name = ?;";
+        final String query = "SELECT * FROM roles WHERE name = ?;";
         RoleEntity role = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -69,7 +69,7 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_ROLE_BY_NAME, e);
         }
         return role;
     }
@@ -98,7 +98,7 @@ public class MySQLRoleRepositoryImpl implements RoleRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_ROLE);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_ROLE, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_ROLE, e);
         }
         return rowDeleted;
     }

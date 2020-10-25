@@ -1,11 +1,7 @@
 package com.practice.online_diagnost.repositories.entities.builders;
 
 
-import com.practice.online_diagnost.repositories.entities.RoleEntity;
-import com.practice.online_diagnost.repositories.entities.SymptomEntity;
 import com.practice.online_diagnost.repositories.entities.TreatmentHistoryEntity;
-import com.practice.online_diagnost.services.domains.RoleDomain;
-import com.practice.online_diagnost.services.domains.SymptomDomain;
 import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
 
 import java.util.List;

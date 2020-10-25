@@ -1,12 +1,8 @@
 package com.practice.online_diagnost.repositories.entities.builders;
 
 
-import com.practice.online_diagnost.repositories.entities.DiagnosEntity;
 import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
-import com.practice.online_diagnost.repositories.entities.RoleEntity;
-import com.practice.online_diagnost.services.domains.DiagnosDomain;
 import com.practice.online_diagnost.services.domains.DiseaseDomain;
-import com.practice.online_diagnost.services.domains.RoleDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;

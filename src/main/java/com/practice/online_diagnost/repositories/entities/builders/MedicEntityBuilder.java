@@ -2,9 +2,7 @@ package com.practice.online_diagnost.repositories.entities.builders;
 
 
 import com.practice.online_diagnost.repositories.entities.MedicEntity;
-import com.practice.online_diagnost.repositories.entities.RoleEntity;
 import com.practice.online_diagnost.services.domains.MedicDomain;
-import com.practice.online_diagnost.services.domains.RoleDomain;
 
 import java.util.List;
 import java.util.stream.Collectors;

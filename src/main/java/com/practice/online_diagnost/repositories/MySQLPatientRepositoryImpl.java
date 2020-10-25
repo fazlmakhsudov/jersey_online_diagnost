@@ -3,8 +3,6 @@ package com.practice.online_diagnost.repositories;
 
 import com.practice.online_diagnost.exceptions.Messages;
 import com.practice.online_diagnost.exceptions.RepositoryException;
-import com.practice.online_diagnost.repositories.Columns;
-import com.practice.online_diagnost.repositories.PatientRepository;
 import com.practice.online_diagnost.repositories.entities.PatientEntity;
 
 import java.sql.Connection;
@@ -17,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLPatientRepositoryImpl implements PatientRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLPatientRepository");
 
-  
+
     @Override
     public int create(PatientEntity patient, Connection con) throws RepositoryException {
         final String query = "INSERT INTO patients (diseases_id) VALUES (?);";
@@ -34,7 +32,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public PatientEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM patients WHERE id = ?;";
+        final String query = "SELECT * FROM patients WHERE id = ?;";
         PatientEntity patient = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -48,11 +46,10 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_PATIENT_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_PATIENT_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_PATIENT_BY_ID, e);
         }
         return patient;
     }
-
 
 
     @Override
@@ -79,7 +76,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_PATIENT);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_PATIENT, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_PATIENT, e);
         }
         return rowDeleted;
     }

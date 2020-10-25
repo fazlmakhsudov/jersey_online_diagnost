@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLSymptomRepositoryImpl implements SymptomRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLSymptomRepository");
 
-  
+
     @Override
     public int create(SymptomEntity symptom, Connection con) throws RepositoryException {
         final String query = "INSERT INTO symptoms (name, diagnoses_id, diseases_id) VALUES (?,?,?);";
@@ -34,7 +34,7 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
 
     @Override
     public SymptomEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM symptoms WHERE id = ?;";
+        final String query = "SELECT * FROM symptoms WHERE id = ?;";
         SymptomEntity symptom = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -53,14 +53,14 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_ID, e);
         }
         return symptom;
     }
 
     @Override
     public SymptomEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM symptoms WHERE name = ?;";
+        final String query = "SELECT * FROM symptoms WHERE name = ?;";
         SymptomEntity symptom = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -79,7 +79,7 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_SYMPTOM_BY_NAME, e);
         }
         return symptom;
     }
@@ -167,7 +167,7 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_SYMPTOM);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_SYMPTOM, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_SYMPTOM, e);
         }
         return rowDeleted;
     }

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class MySQLQuestionaryRepositoryImpl implements QuestionaryRepository {
     private static final Logger LOGGER = Logger.getLogger("MySQLQuestionaryRepository");
 
-  
+
     @Override
     public int create(QuestionaryEntity questionary, Connection con) throws RepositoryException {
         final String query = "INSERT INTO questionaries (name) VALUES (?);";
@@ -32,7 +32,7 @@ public class MySQLQuestionaryRepositoryImpl implements QuestionaryRepository {
 
     @Override
     public QuestionaryEntity read(int id, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM questionaries WHERE id = ?;";
+        final String query = "SELECT * FROM questionaries WHERE id = ?;";
         QuestionaryEntity questionary = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -49,14 +49,14 @@ public class MySQLQuestionaryRepositoryImpl implements QuestionaryRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_ID);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_ID, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_ID, e);
         }
         return questionary;
     }
 
     @Override
     public QuestionaryEntity read(String name, Connection con) throws RepositoryException {
-        final String query  = "SELECT * FROM questionaries WHERE name = ?;";
+        final String query = "SELECT * FROM questionaries WHERE name = ?;";
         QuestionaryEntity questionary = null;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, name);
@@ -73,7 +73,7 @@ public class MySQLQuestionaryRepositoryImpl implements QuestionaryRepository {
             }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_NAME);
-            throw  new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_NAME, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_OBTAIN_QUESTIONARY_BY_NAME, e);
         }
         return questionary;
     }
@@ -102,7 +102,7 @@ public class MySQLQuestionaryRepositoryImpl implements QuestionaryRepository {
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_DELETE_QUESTIONARY);
-            throw  new RepositoryException(Messages.ERR_CANNOT_DELETE_QUESTIONARY, e);
+            throw new RepositoryException(Messages.ERR_CANNOT_DELETE_QUESTIONARY, e);
         }
         return rowDeleted;
     }
