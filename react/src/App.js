@@ -1,77 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import Header from './component/header.js';
-import Author from './component/author.js';
-import Book from './component/book.js';
-import ModalWindow from './component/modal.js';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-import BookAnime1 from './component/resource/books1.gif';
+import React from 'react';
 import './App.css';
+import Home from './component/home.js';
+import Enquire from './component/common/enquire.js';
+import Services from './component/sevices.js';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import About from './component/about';
+import Contact from './component/contact';
+import Gallery from './component/gallery';
 
-function App() {
-  let url = "http://localhost:8080/jersey-library";
-  const [data, setData] = useState('');
-  const [books, setBooks] = useState([]);
-  const [authors, setAuthors] = useState([]);
-  const [authorityFlag, setAuthorityFlag] = useState(false);
-  const [showFlag, setShowFlag] = useState(true);
-  const [mainPageFlag, setMainPageFlag] = useState(true);
-  const [authorization, setAuthorization] = useState('');
 
-  function recommend() {
-    if (authors.length === 0 || books.length === 0) {
-      return '';
-    }
-    let html = [];
-    html.push(
-      <div>
-        <h2>Our top authors: </h2>
-
-      </div>
+export default function App() {
+    localStorage.setItem('company', 'Tele Clinic');
+    localStorage.setItem('author', 'Fazliddin Makhsudov');
+    localStorage.setItem('logo', 'hospital that you can trust');
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/index.html">
+                    <Home />
+                </Route>
+                <Route path="/about.html">
+                    <About />
+                </Route>
+                <Route path="/gallery.html">
+                    <Gallery />
+                </Route>
+                <Route path="/services.html">
+                    <Services />
+                </Route>
+                <Route path="/contact.html">
+                    <Contact />
+                </Route>
+                <Route default >
+                    <Home />
+                </Route>
+            </Switch>
+            <Enquire />
+        </Router>
     );
-    for (const [index, value] of authors.entries()) {
-      html.push(<strong key={index} />)
-    }
-  }
-
-  function showMainPage() {
-    let html = <Row className='mt-5 text-center' >
-      <Col md={{ offset: 3, span: 6 }} xs={12}>
-        <Image className="mt-5" src={BookAnime1} width={400} height={400} rounded />
-      </Col>
-    </Row>;
-    setData(html);
-  }
-
-  useEffect(() => {
-    if (mainPageFlag) {
-      showMainPage();
-      setMainPageFlag(false);
-    }
-
-  });
-
-  return (
-    <Container fluid='sm'>
-      <Header />
-      <Row className='mt-2'>
-        <Col md={4} xs={12} className="" >
-          <Button variant='info' className='' onClick={() => {
-            setMainPageFlag(true);
-            setShowFlag(true);
-          }} block><p className='nav-menu'>LIBRARY</p></Button>
-        </Col>
-        <Author url={url} setData={setData} setAuthors={setAuthors} authorityFlag={authorityFlag} books={books} authors={authors}
-          authorization={authorization} />
-        <Book url={url} setData={setData} setBooks={setBooks} authorityFlag={authorityFlag} authors={authors} books={books}
-          authorization={authorization} />
-      </Row>
-      {
-        data
-      }
-      <ModalWindow showFlag={showFlag} setShowFlag={setShowFlag} url={url} setAuthorityFlag={setAuthorityFlag}
-        setAuthorization={setAuthorization} />
-    </Container>
-  );
 }
 
-export default App;
+
