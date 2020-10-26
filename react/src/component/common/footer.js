@@ -4,24 +4,7 @@ export default function Footer(props) {
     return (
         <>
             <footer class="footer py-md-5 pt-md-3 pb-sm-5">
-                <div class="footer-position">
-                    <div class="container">
-                        <div class="row newsletter-inner">
-                            <div class="col-md-4 py-3">
-                                <h3 class="w3ls-title text-white">
-                                    Get notified</h3>
-                                <p class="text-white">sociosqu ad litora torquent per conubia.</p>
-                            </div>
-                            <div class="col-md-8 newsright">
-                                <form action="#" method="post" class="d-flex">
-                                    <input class="form-control" type="email" placeholder="Enter your email..." name="email" required="" />
-                                    <input class="form-control" type="submit" value="Subscribe" />
-                                </form>
-                            </div>
-                            <div class="up-arrow"></div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="container-fluid py-lg-5 mt-sm-5">
                     <div class="row p-sm-4 px-3 py-5">
                         <div class="col-lg-4 col-md-6 footer-top mt-lg-0 mt-md-5">

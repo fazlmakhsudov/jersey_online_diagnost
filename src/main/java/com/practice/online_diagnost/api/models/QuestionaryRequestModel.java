@@ -15,7 +15,4 @@ import java.util.List;
 public class QuestionaryRequestModel {
     private int id;
     private String name;
-    private List<QuestionRequestModel> questions;
-    private Date createdDate;
-    private Date updatedDate;
 }

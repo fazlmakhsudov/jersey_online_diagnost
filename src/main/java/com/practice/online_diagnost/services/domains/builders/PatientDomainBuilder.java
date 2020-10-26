@@ -13,10 +13,8 @@ public class PatientDomainBuilder {
         return PatientDomain.builder()
                 .id(patientModel.getId())
                 .diseasesId(patientModel.getDiseasesId())
-                .treatmentHistory(Objects.isNull(patientModel.getTreatmentHistory()) ? null
-                        : new TreatmentHistoryDomainBuilder().create(patientModel.getTreatmentHistory()))
-                .userDomain(Objects.isNull(patientModel.getUser()) ? null
-                        : new UserDomainBuilder().create(patientModel.getUser()))
+
+                .condition(patientModel.getCondition())
                 .build();
     }
 
@@ -30,6 +28,7 @@ public class PatientDomainBuilder {
         return PatientDomain.builder()
                 .id(patientEntity.getId())
                 .diseasesId(patientEntity.getDiseasesId())
+                .condition(patientEntity.getCondition())
                 .treatmentHistory(Objects.isNull(patientEntity.getTreatmentHistory()) ? null
                         : new TreatmentHistoryDomainBuilder().create(patientEntity.getTreatmentHistory()))
                 .userDomain(Objects.isNull(patientEntity.getUserEntity()) ? null

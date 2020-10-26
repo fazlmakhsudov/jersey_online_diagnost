@@ -18,10 +18,11 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public int create(PatientEntity patient, Connection con) throws RepositoryException {
-        final String query = "INSERT INTO patients (diseases_id) VALUES (?);";
+        final String query = "INSERT INTO patients (diseases_id, condition) VALUES (?, ?);";
         int rowInserted;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, patient.getDiseasesId());
+            statement.setString(2, patient.getCondition());
             rowInserted = statement.executeUpdate();
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_PATIENT);
@@ -41,6 +42,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
                     patient = PatientEntity.builder()
                             .id(id)
                             .diseasesId(resultSet.getInt(Columns.DISEASES_ID))
+                            .condition(resultSet.getString(Columns.CONDITION))
                             .build();
                 }
             }
@@ -54,11 +56,12 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public boolean update(PatientEntity patient, Connection con) throws RepositoryException {
-        final String query = "UPDATE patients SET diseases_id = ? WHERE id = ?;";
+        final String query = "UPDATE patients SET diseases_id = ?, condition = ? WHERE id = ?;";
         boolean rowUpdated;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, patient.getDiseasesId());
-            statement.setInt(2, patient.getId());
+            statement.setString(2, patient.getCondition());
+            statement.setInt(3, patient.getId());
             rowUpdated = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_UPDATE_PATIENT);
@@ -92,6 +95,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
                     PatientEntity patient = PatientEntity.builder()
                             .id(id)
                             .diseasesId(resultSet.getInt(Columns.DISEASES_ID))
+                            .condition(resultSet.getString(Columns.CONDITION))
                             .build();
                     patientList.add(patient);
                 }
@@ -115,6 +119,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
                     PatientEntity patient = PatientEntity.builder()
                             .id(id)
                             .diseasesId(diseasesId)
+                            .condition(resultSet.getString(Columns.CONDITION))
                             .build();
                     patientList.add(patient);
                 }

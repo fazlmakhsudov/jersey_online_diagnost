@@ -21,6 +21,9 @@ public class UserDomain {
     private int patientsId;
     private int medicsId;
     private int rolesId;
+    private String gender;
+    private String location;
+    private Date birthdate;
 
     private Date createdDate;
     private Date updatedDate;

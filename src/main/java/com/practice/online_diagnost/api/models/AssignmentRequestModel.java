@@ -16,6 +16,5 @@ public class AssignmentRequestModel {
     private String name;
     private int diagnosesId;
     private int medicsId;
-    private Date createdDate;
-    private Date updatedDate;
+
 }

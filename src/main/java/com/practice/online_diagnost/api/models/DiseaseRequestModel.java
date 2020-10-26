@@ -15,7 +15,4 @@ import java.util.List;
 public class DiseaseRequestModel {
     private int id;
     private String name;
-    private List<PatientRequestModel> patients;
-    private List<SymptomRequestModel> symptoms;
-    private Date createdDate;
 }

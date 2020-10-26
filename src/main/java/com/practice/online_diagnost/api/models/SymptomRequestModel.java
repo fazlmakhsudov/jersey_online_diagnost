@@ -16,6 +16,4 @@ public class SymptomRequestModel {
     private String name;
     private int diagnosesId;
     private int diseasesId;
-    private Date createdDate;
-    private Date updatedDate;
 }

@@ -19,6 +19,9 @@ public class UserDomainBuilder {
                 .medicsId(userModel.getMedicsId())
                 .patientsId(userModel.getPatientsId())
                 .rolesId(userModel.getRolesId())
+                .gender(userModel.getGender().equalsIgnoreCase("female") ? "female" : "male")
+                .location(userModel.getLocation())
+                .birthdate(userModel.getBirthdate())
                 .build();
     }
 
@@ -38,9 +41,12 @@ public class UserDomainBuilder {
                 .phone(userEntity.getPhone())
                 .medicsId(userEntity.getMedicsId())
                 .patientsId(userEntity.getPatientsId())
+                .rolesId(userEntity.getRolesId())
+                .gender(userEntity.getGender())
+                .location(userEntity.getLocation())
+                .birthdate(userEntity.getBirthdate())
                 .createdDate(userEntity.getCreatedDate())
                 .updatedDate(userEntity.getUpdatedDate())
-                .rolesId(userEntity.getRolesId())
                 .build();
     }
 

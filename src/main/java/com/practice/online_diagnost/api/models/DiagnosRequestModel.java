@@ -15,9 +15,6 @@ import java.util.List;
 public class DiagnosRequestModel {
     private int id;
     private String name;
-    private List<AssignmentRequestModel> assignments;
-    private List<SymptomRequestModel> symptoms;
     private int treatmentHistoriesId;
-    private Date createdDate;
-    private Date updatedDate;
+
 }

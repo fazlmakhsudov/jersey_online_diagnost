@@ -15,7 +15,4 @@ import java.util.List;
 public class TreatmentHistoryRequestModel {
     private int id;
     private int patientsId;
-    private List<DiagnosRequestModel> diagnoses;
-    private Date createdDate;
-    private Date updatedDate;
 }

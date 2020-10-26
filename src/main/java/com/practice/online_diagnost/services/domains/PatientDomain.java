@@ -12,6 +12,7 @@ import lombok.ToString;
 public class PatientDomain {
     private int id;
     private int diseasesId;
+    private String condition;
     private TreatmentHistoryDomain treatmentHistory;
     private UserDomain userDomain;
 }

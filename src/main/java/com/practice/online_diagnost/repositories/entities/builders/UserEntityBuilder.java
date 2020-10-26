@@ -19,6 +19,9 @@ public class UserEntityBuilder {
                 .patientsId(userDomain.getPatientsId())
                 .rolesId(userDomain.getRolesId())
                 .phone(userDomain.getPhone())
+                .gender(userDomain.getGender())
+                .location(userDomain.getLocation())
+                .birthdate(userDomain.getBirthdate())
                 .createdDate(userDomain.getCreatedDate())
                 .updatedDate(userDomain.getUpdatedDate())
                 .build();

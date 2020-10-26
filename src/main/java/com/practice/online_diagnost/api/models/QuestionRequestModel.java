@@ -16,6 +16,4 @@ public class QuestionRequestModel {
     private String name;
     private String answer;
     private int questionariesId;
-    private Date createdDate;
-    private Date updatedDate;
 }

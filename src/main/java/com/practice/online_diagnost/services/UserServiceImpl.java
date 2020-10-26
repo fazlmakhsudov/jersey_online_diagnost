@@ -5,6 +5,7 @@ import com.practice.online_diagnost.exceptions.Messages;
 import com.practice.online_diagnost.exceptions.RepositoryException;
 import com.practice.online_diagnost.exceptions.ServiceException;
 import com.practice.online_diagnost.repositories.UserRepository;
+import com.practice.online_diagnost.repositories.entities.UserEntity;
 import com.practice.online_diagnost.repositories.entities.builders.UserEntityBuilder;
 import com.practice.online_diagnost.repositories.util.DBManager;
 import com.practice.online_diagnost.services.domains.UserDomain;
@@ -12,6 +13,7 @@ import com.practice.online_diagnost.services.domains.builders.UserDomainBuilder;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 
@@ -54,7 +56,8 @@ public class UserServiceImpl implements UserService {
         UserDomain userDomain = null;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            userDomain = userDomainBuilder.create(userRepository.read(id, con));
+            UserEntity foundUser = userRepository.read(id, con);
+            userDomain = Objects.isNull(foundUser) ? null : userDomainBuilder.create(foundUser);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
@@ -74,7 +77,8 @@ public class UserServiceImpl implements UserService {
         UserDomain userDomain = null;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            userDomain = userDomainBuilder.create(userRepository.read(email, con));
+            UserEntity foundUser = userRepository.read(email, con);
+            userDomain = Objects.isNull(foundUser) ? null : userDomainBuilder.create(foundUser);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);

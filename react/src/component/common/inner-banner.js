@@ -6,8 +6,8 @@ export default function InnerBanner(props) {
     function makeActive(menuItem = 'home') {
         let navStyle = "nav-item  mr-3 ";
         if (Object.is(props.menu, menuItem)) {
-            navStyle += Object.is(props.menu,'dropdown') ? "dropdown active" : 'active';
-        }  
+            navStyle += Object.is(props.menu, 'dropdown') ? "dropdown active" : 'active';
+        }
         return navStyle;
     }
 
@@ -27,33 +27,41 @@ export default function InnerBanner(props) {
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style={{position:'absolute', left:'50%'}}>
                         <ul class="navbar-nav ml-lg-auto text-center">
-                            <li className={makeActive('home')}>
+                            <li class="nav-item  mr-3">
                                 <a class="nav-link text-white" href="index.html">Home
                                 <span class="sr-only">(current)</span>
                                 </a>
                             </li>
-                            <li className={makeActive('about')}>
+                            <li class={makeActive('about')}>
                                 <a class="nav-link text-white text-capitalize" href="about.html">about</a>
                             </li>
-                            <li className={makeActive('services')}>
+                            <li class={makeActive('services')}>
                                 <a class="nav-link text-white text-capitalize" href="services.html">services</a>
                             </li>
-                            <li className={makeActive('dropdown')}>
-                                <a class="nav-link dropdown-toggle  text-white text-capitalize" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            <li class={makeActive('gallery')}>
+                                <a class="nav-link  text-white text-capitalize" href="gallery.html">gallery</a>
+                            </li>
+                            <li class={makeActive('contact')}>
+                                <a class="nav-link  text-white text-capitalize" href="contact.html">contact</a>
+                            </li>
+                            <li class='nav-item  mr-3 d-inline'>
+                                <a class="nav-link  text-white text-capitalize d-inline" href="#">EN</a>
+                                <span class="nav-link  text-white text-capitalize d-inline">|</span>
+                                <a class="nav-link  text-white text-capitalize d-inline" href="#">RU</a>           
+                            </li>
+                            <li class="nav-item dropdown mr-3">
+                                <a class="nav-link dropdown-toggle  text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
+                                    fazl@gmail.com
                             </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="gallery.html">Gallery</a>
-                                    <a class="dropdown-item" href="team.html">Team</a>
+                                    <a class="dropdown-item" href="my-cabinet.html">My cabinet</a>
+                                    <a class="dropdown-item" href="#">something</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="typo.html">Typography</a>
+                                    <a class="dropdown-item" href="#">Log out</a>
                                 </div>
-                            </li>
-                            <li className={makeActive('contact')}>
-                                <a class="nav-link  text-white text-capitalize" href="contact.html">contact</a>
                             </li>
                         </ul>
                     </div>

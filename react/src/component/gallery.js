@@ -7,7 +7,7 @@ import Footer from './common/footer';
 export default function Gallery(props) {
     return (
         <div>
-            <InnerBanner menu='dropdown' />
+            <InnerBanner menu='gallery' />
             <BreadCrump menu = 'gallery' />
             <GalleryItems />
             <Footer />

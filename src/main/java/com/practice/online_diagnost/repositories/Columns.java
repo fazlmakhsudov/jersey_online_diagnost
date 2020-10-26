@@ -22,6 +22,9 @@ public class Columns {
     public static final String PASSWORD = "password";
     public static final String PHONE = "phone";
     public static final String ROLES_ID = "roles_id";
-
+    public static final String GENDER = "gender";
+    public static final String LOCATION = "location";
+    public static final String BIRTHDATE = "birth_date";
+    public static final String CONDITION = "condition";
 
 }

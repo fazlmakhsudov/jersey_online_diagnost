@@ -21,7 +21,7 @@ public class UserRequestModel {
     private int patientsId;
     private int medicsId;
     private int rolesId;
-
-    private Date createdDate;
-    private Date updatedDate;
+    private String gender;
+    private String location;
+    private Date birthdate;
 }

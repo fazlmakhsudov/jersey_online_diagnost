@@ -16,6 +16,8 @@ export default function BreadCrump(props) {
             case 'gallery':
                 ending += 'Gallery';
                 break;
+            case 'My cabinet':
+                ending += 'My cabinet';
             default:
         }
         return ending;

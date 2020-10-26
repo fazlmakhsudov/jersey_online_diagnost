@@ -12,10 +12,13 @@ import {
 import About from './component/about';
 import Contact from './component/contact';
 import Gallery from './component/gallery';
+import MyCabinet from './component/my-cabinet.js';
+import Admin from './admins/app/App.js';
+
 
 
 export default function App() {
-    localStorage.setItem('company', 'Tele Clinic');
+    localStorage.setItem('company', 'Online-Diagnost');
     localStorage.setItem('author', 'Fazliddin Makhsudov');
     localStorage.setItem('logo', 'hospital that you can trust');
     return (
@@ -35,6 +38,14 @@ export default function App() {
                 </Route>
                 <Route path="/contact.html">
                     <Contact />
+                </Route>
+                <Route path="/my-cabinet.html">
+                    <MyCabinet />
+                </Route>
+                <Route path="/admin.html">
+                    <Router basename="/admin">
+                        <Admin />
+                    </Router>
                 </Route>
                 <Route default >
                     <Home />

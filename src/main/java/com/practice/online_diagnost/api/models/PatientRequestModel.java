@@ -12,6 +12,5 @@ import lombok.ToString;
 public class PatientRequestModel {
     private int id;
     private int diseasesId;
-    private TreatmentHistoryRequestModel treatmentHistory;
-    private UserRequestModel user;
+    private String condition;
 }
