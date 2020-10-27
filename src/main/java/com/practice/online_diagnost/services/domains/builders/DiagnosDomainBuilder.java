@@ -13,10 +13,10 @@ public class DiagnosDomainBuilder {
         return DiagnosDomain.builder()
                 .id(diagnosModel.getId())
                 .name(diagnosModel.getName())
-                .assignments(Objects.isNull(diagnosModel.getAssignments()) ? null :
-                        new AssignmentDomainBuilder().create2(diagnosModel.getAssignments()))
-                .symptoms(Objects.isNull(diagnosModel.getAssignments()) ? null
-                        : new SymptomDomainBuilder().create2(diagnosModel.getSymptoms()))
+//                .assignments(Objects.isNull(diagnosModel.getAssignments()) ? null :
+//                        new AssignmentDomainBuilder().create2(diagnosModel.getAssignments()))
+//                .symptoms(Objects.isNull(diagnosModel.getAssignments()) ? null
+//                        : new SymptomDomainBuilder().create2(diagnosModel.getSymptoms()))
                 .treatmentHistoriesId(diagnosModel.getTreatmentHistoriesId())
                 .build();
     }

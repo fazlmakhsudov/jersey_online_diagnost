@@ -14,6 +14,8 @@ import Contact from './component/contact';
 import Gallery from './component/gallery';
 import MyCabinet from './component/my-cabinet.js';
 import Admin from './admins/app/App.js';
+import Login from './component/login.js';
+import Registration from './component/registration.js';
 
 
 
@@ -41,6 +43,12 @@ export default function App() {
                 </Route>
                 <Route path="/my-cabinet.html">
                     <MyCabinet />
+                </Route>
+                <Route path="/login.html">
+                    <Login />
+                </Route>
+                <Route path="/registration.html">
+                    <Registration />
                 </Route>
                 <Route path="/admin.html">
                     <Router basename="/admin">

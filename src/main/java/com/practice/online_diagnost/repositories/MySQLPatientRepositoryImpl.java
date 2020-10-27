@@ -18,17 +18,21 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public int create(PatientEntity patient, Connection con) throws RepositoryException {
-        final String query = "INSERT INTO patients (diseases_id, condition) VALUES (?, ?);";
-        int rowInserted;
-        try (PreparedStatement statement = con.prepareStatement(query)) {
+        final String query = "INSERT INTO patients (diseases_id) VALUES (?);";
+        int id = -1;
+        try (PreparedStatement statement = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, patient.getDiseasesId());
-            statement.setString(2, patient.getCondition());
-            rowInserted = statement.executeUpdate();
+            statement.executeUpdate();
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs != null && rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_PATIENT);
             throw new RepositoryException(Messages.ERR_CANNOT_INSERT_PATIENT, e);
         }
-        return rowInserted;
+        return id;
     }
 
     @Override

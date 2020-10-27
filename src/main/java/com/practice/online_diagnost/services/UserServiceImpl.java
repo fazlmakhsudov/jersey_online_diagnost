@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int add(UserDomain item) throws ServiceException {
         Connection con = null;
-        int row = -1;
+        int id = -1;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            row = userRepository.create(userEntityBuilder.create(item), con);
+            id = userRepository.create(userEntityBuilder.create(item), con);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         } finally {
             DBManager.releaseConnection(con);
         }
-        return row;
+        return id;
     }
 
     @Override

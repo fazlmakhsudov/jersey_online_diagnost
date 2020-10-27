@@ -12,8 +12,8 @@ public class TreatmentHistoryDomainBuilder {
     public TreatmentHistoryDomain create(TreatmentHistoryRequestModel treatmentHistoryModel) {
         return TreatmentHistoryDomain.builder()
                 .id(treatmentHistoryModel.getId())
-                .diagnoses(Objects.isNull(treatmentHistoryModel.getDiagnoses()) ? null
-                        : new DiagnosDomainBuilder().create2(treatmentHistoryModel.getDiagnoses()))
+//                .diagnoses(Objects.isNull(treatmentHistoryModel.getDiagnoses()) ? null
+//                        : new DiagnosDomainBuilder().create2(treatmentHistoryModel.getDiagnoses()))
                 .patientsId(treatmentHistoryModel.getPatientsId())
 
                 .build();

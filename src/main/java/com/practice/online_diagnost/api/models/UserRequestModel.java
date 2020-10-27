@@ -1,9 +1,6 @@
 package com.practice.online_diagnost.api.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 
@@ -11,6 +8,8 @@ import java.sql.Date;
 @Setter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRequestModel {
     private int id;
     private String name;

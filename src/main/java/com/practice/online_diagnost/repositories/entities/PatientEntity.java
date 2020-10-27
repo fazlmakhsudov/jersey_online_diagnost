@@ -13,6 +13,4 @@ public class PatientEntity {
     private int id;
     private int diseasesId;
     private String condition;
-    private TreatmentHistoryEntity treatmentHistory;
-    private UserEntity userEntity;
 }

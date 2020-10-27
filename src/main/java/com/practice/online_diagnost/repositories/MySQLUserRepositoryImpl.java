@@ -20,8 +20,8 @@ public class MySQLUserRepositoryImpl implements UserRepository {
     public int create(UserEntity user, Connection con) throws RepositoryException {
         final String query = "INSERT INTO users (name, surname, email, password, phone, patients_id, " +
                 "medics_id, roles_id, gender, birth_date, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        int rowInserted;
-        try (PreparedStatement statement = con.prepareStatement(query)) {
+        int id = -1;
+        try (PreparedStatement statement = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, user.getName());
             statement.setString(k++, user.getSurname());
@@ -34,13 +34,18 @@ public class MySQLUserRepositoryImpl implements UserRepository {
             statement.setString(k++, user.getGender());
             statement.setDate(k++, user.getBirthdate());
             statement.setString(k, user.getLocation());
-
-            rowInserted = statement.executeUpdate();
+            System.out.println(statement);
+            statement.executeUpdate();
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs != null && rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_USER);
             throw new RepositoryException(Messages.ERR_CANNOT_INSERT_USER, e);
         }
-        return rowInserted;
+        return id;
     }
 
     @Override

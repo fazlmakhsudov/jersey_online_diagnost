@@ -17,7 +17,7 @@ export default function MyCabinet(props) {
                 <Tabs className='justify-content-center' defaultActiveKey="profile" id="uncontrolled-tab-example">
                     <Tab eventKey="profile" title="Profile" className='container mt-5'>
                         <Form>
-                            <Form.Group as={Row} controlId="name" className='justify-content-center'>
+                            <Form.Group as={Row} className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Name
                                 </Form.Label>
@@ -26,7 +26,7 @@ export default function MyCabinet(props) {
                                 </Col>
                             </Form.Group>
 
-                            <Form.Group as={Row} controlId="surname" className='justify-content-center'>
+                            <Form.Group as={Row} className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Surname
                                 </Form.Label>
@@ -35,7 +35,7 @@ export default function MyCabinet(props) {
                                 </Col>
                             </Form.Group>
 
-                            <Form.Group as={Row} controlId="birthdate" className='justify-content-center'>
+                            <Form.Group as={Row} className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Birthdate
                                 </Form.Label>
@@ -43,7 +43,7 @@ export default function MyCabinet(props) {
                                     <Form.Control type='date' name='birthdate' placeholder='Type your birthdate' />
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} controlId="email" className='justify-content-center'>
+                            <Form.Group as={Row} className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Email
                                 </Form.Label>
@@ -52,7 +52,7 @@ export default function MyCabinet(props) {
                                 </Col>
                             </Form.Group>
 
-                            <Form.Group as={Row} controlId="phone" className='justify-content-center'>
+                            <Form.Group as={Row}  className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Phone
                                 </Form.Label>
@@ -60,7 +60,7 @@ export default function MyCabinet(props) {
                                     <Form.Control type='text' placeholder='Type your phone' />
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} controlId="name" className='justify-content-center'>
+                            <Form.Group as={Row} className='justify-content-center'>
                                 <Form.Label column sm="2">
                                     Gender
                                 </Form.Label>
@@ -123,7 +123,13 @@ export default function MyCabinet(props) {
 
                     </Col>
                     <Col sm={8}>
+                        <div>
+                            <div className="spinner-wrapper">
+                                <div className="donut"></div>
+                            </div>
+                        </div>
                     </Col>
+
                 </Row>
             </div>
 

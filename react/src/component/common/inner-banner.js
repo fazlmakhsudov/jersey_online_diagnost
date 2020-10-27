@@ -27,9 +27,9 @@ export default function InnerBanner(props) {
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style={{position:'absolute', left:'50%'}}>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style={{ position: 'absolute', left: '55%' }}>
                         <ul class="navbar-nav ml-lg-auto text-center">
-                            <li class="nav-item  mr-3">
+                            <li class="nav-item ">
                                 <a class="nav-link text-white" href="index.html">Home
                                 <span class="sr-only">(current)</span>
                                 </a>
@@ -46,12 +46,12 @@ export default function InnerBanner(props) {
                             <li class={makeActive('contact')}>
                                 <a class="nav-link  text-white text-capitalize" href="contact.html">contact</a>
                             </li>
-                            <li class='nav-item  mr-3 d-inline'>
+                            {/* <li class='nav-item d-inline'>
                                 <a class="nav-link  text-white text-capitalize d-inline" href="#">EN</a>
                                 <span class="nav-link  text-white text-capitalize d-inline">|</span>
                                 <a class="nav-link  text-white text-capitalize d-inline" href="#">RU</a>           
-                            </li>
-                            <li class="nav-item dropdown mr-3">
+                            </li> */}
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle  text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     fazl@gmail.com

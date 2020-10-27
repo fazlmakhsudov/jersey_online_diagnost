@@ -13,10 +13,10 @@ public class MedicDomainBuilder {
         return MedicDomain.builder()
                 .id(medicModel.getId())
                 .specialization(medicModel.getSpecialization())
-                .assignments(Objects.isNull(medicModel.getAssignments()) ? null
-                        : new AssignmentDomainBuilder().create2(medicModel.getAssignments()))
-                .userDomain(Objects.isNull(medicModel.getUser()) ? null
-                        : new UserDomainBuilder().create(medicModel.getUser()))
+//                .assignments(Objects.isNull(medicModel.getAssignments()) ? null
+//                        : new AssignmentDomainBuilder().create2(medicModel.getAssignments()))
+//                .userDomain(Objects.isNull(medicModel.getUser()) ? null
+//                        : new UserDomainBuilder().create(medicModel.getUser()))
                 .build();
     }
 

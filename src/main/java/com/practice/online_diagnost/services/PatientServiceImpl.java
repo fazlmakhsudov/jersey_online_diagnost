@@ -31,12 +31,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public int add(PatientDomain item) throws ServiceException {
+    public int add(PatientDomain patient) throws ServiceException {
         Connection con = null;
-        int row = -1;
+        int id = -1;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            row = patientRepository.create(patientEntityBuilder.create(item), con);
+            id = patientRepository.create(patientEntityBuilder.create(patient), con);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
@@ -47,7 +47,7 @@ public class PatientServiceImpl implements PatientService {
         } finally {
             DBManager.releaseConnection(con);
         }
-        return row;
+        return id;
     }
 
     @Override

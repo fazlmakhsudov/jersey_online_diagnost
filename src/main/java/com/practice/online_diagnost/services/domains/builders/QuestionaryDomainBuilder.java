@@ -13,8 +13,8 @@ public class QuestionaryDomainBuilder {
         return QuestionaryDomain.builder()
                 .id(questionaryModel.getId())
                 .name(questionaryModel.getName())
-                .questions(Objects.isNull(questionaryModel.getQuestions()) ? null
-                        : new QuestionDomainBuilder().create2(questionaryModel.getQuestions()))
+//                .questions(Objects.isNull(questionaryModel.getQuestions()) ? null
+//                        : new QuestionDomainBuilder().create2(questionaryModel.getQuestions()))
                 .build();
     }
 

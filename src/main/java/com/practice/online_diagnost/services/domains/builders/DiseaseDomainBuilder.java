@@ -13,10 +13,10 @@ public class DiseaseDomainBuilder {
         return DiseaseDomain.builder()
                 .id(diseaseModel.getId())
                 .name(diseaseModel.getName())
-                .symptoms(Objects.isNull(diseaseModel.getSymptoms()) ? null
-                        : new SymptomDomainBuilder().create2(diseaseModel.getSymptoms()))
-                .patients(Objects.isNull(diseaseModel.getPatients()) ? null
-                        : new PatientDomainBuilder().create2(diseaseModel.getPatients()))
+//                .symptoms(Objects.isNull(diseaseModel.getSymptoms()) ? null
+//                        : new SymptomDomainBuilder().create2(diseaseModel.getSymptoms()))
+//                .patients(Objects.isNull(diseaseModel.getPatients()) ? null
+//                        : new PatientDomainBuilder().create2(diseaseModel.getPatients()))
                 .build();
     }
 
