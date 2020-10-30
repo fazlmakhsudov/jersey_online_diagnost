@@ -3,54 +3,89 @@ import React from 'react';
 export default function Header(props) {
     return (
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-gradient-secondary pt-3">
+            <nav className="navbar navbar-expand-lg navbar-light bg-gradient-secondary pt-3">
                 <h1 >
-                    <a class="navbar-brand text-white" href="index.html" >
+                    <a className="navbar-brand text-white" href="/index" >
                         {localStorage.getItem('company')}
                     </a>
                 </h1>
-                <button class="navbar-toggler ml-md-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                <button className="navbar-toggler ml-md-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation" >
-                    <span class="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent" style={{ position: 'absolute', left: '55%' }}> 
-                {/* <!--style={{ position: 'absolute', left: '50%' }} --> */}
-                    <ul class="navbar-nav ml-lg-auto text-center">
-                        <li class="nav-item  mr-3 active">
-                            <a class="nav-link text-white active" href="index.html">Home
-                                <span class="sr-only">(current)</span>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{ position: 'absolute', left: '50%' }}>
+                    {/* <!--style={{ position: 'absolute', left: '50%' }} --> */}
+                    <ul className="navbar-nav ml-lg-auto text-center">
+                        <li className="nav-item  mr-3 active">
+                            <a className="nav-link text-white active" href="/home">Home
+                                <span className="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white text-capitalize" href="about.html">about</a>
+                        <li className="nav-item">
+                            <a className="nav-link text-white text-capitalize" href="/about">about</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white text-capitalize" href="services.html">services</a>
+                        <li className="nav-item">
+                            <a className="nav-link text-white text-capitalize" href="/services">services</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link  text-white text-capitalize" href="gallery.html">gallery</a>
+                        <li className="nav-item">
+                            <a className="nav-link  text-white text-capitalize" href="/gallery">gallery</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link  text-white text-capitalize" href="contact.html">contact</a>
+                        <li className="nav-item">
+                            <a className="nav-link  text-white text-capitalize" href="/contact">contact</a>
                         </li>
-                        {/* <li class="nav-item">
-                            <a class="nav-link  text-white text-capitalize" href="contact.html">EN | RU</a>
+                        {/* <li className="nav-item">
+                            <a className="nav-link  text-white text-capitalize" href="/contact">EN | RU</a>
                         </li> */}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle  text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle  text-white" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                fazl@gmail.com
+                                {
+                                    sessionStorage.getItem('token') != null ?
+                                        <>
+                                            {sessionStorage.getItem('email') + '     '}
+                                            <span className='mdi mdi-account-check' />
+                                        </>
+                                        : <span className='mdi mdi-account-outline'></span>
+                                }
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="my-cabinet.html">My cabinet</a>
-                                <a class="dropdown-item" href="#">something</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log out</a>
+                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {
+                                    sessionStorage.getItem('token') ?
+
+                                        <>
+                                            <a className="dropdown-item" href="/login">Log in</a>
+                                            <div className="dropdown-divider"></div>
+                                            <a className="dropdown-item" href="/registration">Registration</a>
+                                        </>
+
+                                        : sessionStorage.getItem('role') === '3' ?
+                                            <>
+                                                <a className="dropdown-item" href="/my-cabinet">My cabinet</a>
+                                                <div className="dropdown-divider"></div>
+                                                <a className="dropdown-item" href="/logout">Log out</a>
+                                            </>
+                                            : sessionStorage.getItem('role') === '2' ?
+
+                                                <>
+                                                    <a className="dropdown-item" href="/my-cabinet">My cabinet</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <a className="dropdown-item" href="/logout">Log out</a>
+                                                </>
+                                                : sessionStorage.getItem('role') === '1' ?
+
+                                                    <>
+                                                        <a className="dropdown-item" href="/admin">My admin</a>
+                                                        <div className="dropdown-divider"></div>
+                                                        <a className="dropdown-item" href="/logout">Log out</a>
+                                                    </>
+                                                    : <a className="dropdown-item" href="/logout">Log out</a>
+                                }
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
+    
         </header>
     );
 }

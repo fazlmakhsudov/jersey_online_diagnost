@@ -2,7 +2,6 @@ package com.practice.online_diagnost.api.models.builders;
 
 
 import com.practice.online_diagnost.api.models.PatientResponseModel;
-import com.practice.online_diagnost.api.models.TreatmentHistoryResponseModel;
 import com.practice.online_diagnost.services.domains.PatientDomain;
 
 import javax.ejb.Stateless;

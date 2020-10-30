@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,16 +29,17 @@
     <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <title>Telemedicine</title>
     <script>
-      addEventListener("load", function () {
-          setTimeout(hideURLbar, 0);
-      }, false);
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-      function hideURLbar() {
-          window.scrollTo(0, 1);
-      }
-  </script>
-  </head>
-  <body>
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+</head>
+
+<body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -143,5 +145,20 @@
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.js"></script>
-  </body>
+    <script>
+        window.addEventListener('beforeunload', function (e) {
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', 'handler.php', true);
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // xhr.send('key=' + encodeURIComponent('Hi'));
+
+            // e.preventDefault();
+            // var confirmationMessage = "";
+            // (e || window.event).returnValue = confirmationMessage;
+            // return confirmationMessage;
+            sessionStorage.setItem("exit", "I am in the index.html script");
+        }, false);
+    </script>
+</body>
+
 </html>

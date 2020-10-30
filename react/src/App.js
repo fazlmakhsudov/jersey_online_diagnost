@@ -6,16 +6,18 @@ import Services from './component/sevices.js';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import About from './component/about';
 import Contact from './component/contact';
 import Gallery from './component/gallery';
-import MyCabinet from './component/my-cabinet.js';
+import PatientCabinet from './component/patient-cabinet.js';
+import DoctorCabinet from './component/doctor-cabinet.js';
 import Admin from './admins/app/App.js';
 import Login from './component/login.js';
 import Registration from './component/registration.js';
+import Logout from './component/logout.js';
+import Error404 from './component/Error404.js';
 
 
 
@@ -23,40 +25,70 @@ export default function App() {
     localStorage.setItem('company', 'Online-Diagnost');
     localStorage.setItem('author', 'Fazliddin Makhsudov');
     localStorage.setItem('logo', 'hospital that you can trust');
+   
+
     return (
         <Router>
             <Switch>
-                <Route exact path="/index.html">
+                <Route exact path="/">
                     <Home />
                 </Route>
-                <Route path="/about.html">
+                <Route exact path="/home">
+                    <Home />
+                </Route>
+                <Route path="/about">
                     <About />
                 </Route>
-                <Route path="/gallery.html">
+                <Route path="/gallery">
                     <Gallery />
                 </Route>
-                <Route path="/services.html">
+                <Route path="/services">
                     <Services />
                 </Route>
-                <Route path="/contact.html">
+                <Route path="/contact">
                     <Contact />
                 </Route>
-                <Route path="/my-cabinet.html">
-                    <MyCabinet />
+                {
+                    sessionStorage.getItem('role') != null && sessionStorage.getItem('role') === '3'
+                        ?
+                        <Route path="/my-cabinet">
+                            <PatientCabinet />
+                        </Route>
+                        : sessionStorage.getItem('role') != null && sessionStorage.getItem('role') === '2'
+                            ?
+                            <Route path="/my-cabinet">
+                                <DoctorCabinet />
+                            </Route>
+                            : <Route path="/my-cabinet">
+                                <Home />
+                            </Route>
+
+                }
+                <Route path="/my-cabinet">
+                    <PatientCabinet />
                 </Route>
-                <Route path="/login.html">
+                <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/registration.html">
+                <Route path="/registration">
                     <Registration />
                 </Route>
-                <Route path="/admin.html">
-                    <Router basename="/admin">
-                        <Admin />
-                    </Router>
+                <Route path="/logout">
+                    <Logout />
                 </Route>
+                {
+                    sessionStorage.getItem('role') != null && sessionStorage.getItem('role') === '1'
+                        ?
+                        <Route path="/admin">
+                            <Router basename="/admin">
+                                <Admin />
+                            </Router>
+                        </Route>
+                        : ''
+
+                }
                 <Route default >
-                    <Home />
+                    <Error404 />
                 </Route>
             </Switch>
             <Enquire />

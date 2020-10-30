@@ -8,7 +8,6 @@ import com.practice.online_diagnost.repositories.DiagnosRepository;
 import com.practice.online_diagnost.repositories.entities.builders.DiagnosEntityBuilder;
 import com.practice.online_diagnost.repositories.util.DBManager;
 import com.practice.online_diagnost.services.domains.DiagnosDomain;
-import com.practice.online_diagnost.services.domains.DiseaseDomain;
 import com.practice.online_diagnost.services.domains.builders.DiagnosDomainBuilder;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
@@ -108,8 +107,10 @@ public class DiagnosServiceImpl implements DiagnosService {
         try {
             con = DBManager.getInstance().getConnectionFromPool();
             diagnosDomainList = diagnosDomainBuilder.create(diagnosRepository.readForTreatmentHistories(treatmentHistoriesId, con));
+
             for (DiagnosDomain diagnosDomain : diagnosDomainList) {
                 diagnosDomain.setAssignments(assignmentService.findForDiagnoses(diagnosDomain.getId()));
+
                 diagnosDomain.setSymptoms(symptomService.findForDiagnoses(diagnosDomain.getId()));
             }
             con.commit();

@@ -1,8 +1,10 @@
 package com.practice.online_diagnost.api.resources.v1;
 
+import com.practice.online_diagnost.api.filters.Secured;
 import com.practice.online_diagnost.api.models.UserRequestModel;
+import com.practice.online_diagnost.api.models.UserResponseModel;
+import com.practice.online_diagnost.api.models.builders.UserResponseModelBuilder;
 import com.practice.online_diagnost.exceptions.ServiceException;
-import com.practice.online_diagnost.services.DiagnosService;
 import com.practice.online_diagnost.services.PatientService;
 import com.practice.online_diagnost.services.TokenServiceImpl;
 import com.practice.online_diagnost.services.UserService;
@@ -15,6 +17,8 @@ import com.practice.online_diagnost.services.factory.ServiceType;
 import lombok.SneakyThrows;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
@@ -28,9 +32,9 @@ import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 
 
-@Path("/test")
-public class TestResourse {
-    private static final Logger LOG = Logger.getLogger("TestResourse");
+@Path("/users")
+public class UserResourse {
+    private static final Logger LOG = Logger.getLogger(UserResourse.class.getSimpleName());
 
 
     @GET
@@ -102,6 +106,8 @@ public class TestResourse {
         try {
             UserDomain userDomain = userService.find(userRequestModel.getEmail());
             String token = TokenServiceImpl.getInstance().generate(userDomain.getEmail(), userDomain.getPatientsId());
+
+
             if (!Objects.isNull(userDomain) && !Objects.isNull(userRequestModel.getPassword())
                     && userDomain.getPassword().equals(encryptPassword(userRequestModel.getPassword()))) {
                 sb.append("{");
@@ -120,12 +126,76 @@ public class TestResourse {
         return !error ? Response.ok(sb.toString()).build() : Response.serverError().build();
     }
 
-    @Path("{searchParameter}")
+    @Secured
+    @PUT
+    @Path("/save")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response saveUser(UserRequestModel userRequestModel) {
+
+        UserService userService = (UserService) ServiceFactory.createService(ServiceType.USER_SERVICE);
+
+        StringBuilder sb = new StringBuilder();
+
+        boolean error = false;
+        try {
+            UserDomain userDomain = userService.find(userRequestModel.getEmail());
+
+            if (!Objects.isNull(userDomain) && !Objects.isNull(userRequestModel.getPassword())) {
+                userDomain.setName(!Validator.isValidString(userRequestModel.getName()) ? userDomain.getName() : userRequestModel.getName());
+
+                userDomain.setSurname(!Validator.isValidString(userRequestModel.getSurname()) ? userDomain.getSurname() : userRequestModel.getSurname());
+
+                userDomain.setBirthdate(!Validator.isValidDate(userRequestModel.getBirthdate()) ? userDomain.getBirthdate() : userRequestModel.getBirthdate());
+                userDomain.setEmail(!Validator.isValidString(userRequestModel.getEmail()) ? userDomain.getEmail() : userRequestModel.getEmail());
+                userDomain.setPhone(!Validator.isValidString(userRequestModel.getPhone()) ? userDomain.getPhone() : userRequestModel.getPhone());
+
+                userDomain.setPassword(!Validator.isValidString(userRequestModel.getPassword())
+                        || userDomain.getPassword().equals(userRequestModel.getPassword())
+                        ? userDomain.getPassword()
+                        : encryptPassword(userRequestModel.getPassword()));
+
+
+                userDomain.setGender(!Validator.isValidString(userRequestModel.getGender()) ? userDomain.getGender() : userRequestModel.getGender());
+                userDomain.setLocation(!Validator.isValidString(userRequestModel.getLocation()) ? userDomain.getLocation() : userRequestModel.getLocation());
+                if (userService.save(userDomain)) {
+                    String token = TokenServiceImpl.getInstance().generate(userDomain.getEmail(), userDomain.getPatientsId());
+                    sb.append("{");
+                    sb.append(String.format("\"token\":\"%s\",", token));
+                    sb.append(String.format("\"role\":%d", userDomain.getRolesId()));
+                    sb.append("}");
+                } else {
+                    error = true;
+                }
+            } else {
+                error = true;
+            }
+
+        } catch (ServiceException e) {
+            LOG.severe(e.getMessage());
+            error = true;
+        }
+        return !error ? Response.ok(sb.toString()).build() : Response.serverError().build();
+    }
+
+
+    @SneakyThrows
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DiagnosDomain> getAuthors(@PathParam("searchParameter") String searchParameter) throws ServiceException {
+    @Path("/single")
+    public Response getBook(ContainerRequestContext requestContext) {
+        UserService userService = (UserService) ServiceFactory.createService(ServiceType.USER_SERVICE);
+        String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String email = TokenServiceImpl.getInstance().getEmail(token);
+        UserDomain userDomain = Validator.isValidString(email) ? userService.find(email) : null;
 
-        return ((DiagnosService) ServiceFactory.createService(ServiceType.DIAGNOS_SERVICE)).findForTreatmentHistories(Integer.parseInt(searchParameter));
+        UserResponseModel userResponseModel = null;
+        if (!Objects.isNull(userDomain)) {
+            userResponseModel = new UserResponseModelBuilder().create(userDomain);
+        }
+
+        return Objects.isNull(userResponseModel) ? Response.status(Response.Status.NOT_FOUND).build() :
+                Response.ok(userResponseModel).build();
     }
 
 

@@ -3,34 +3,34 @@ import Header from './common/header';
 
 export default function Banner(props) {
     return (
-        <div class="banner" id="home">
+        <div className="banner" id="home">
             {/* <!-- header --> */}
             <Header />
             {/* <!-- //header --> */}
-            <div class="container">
+            <div className="container">
                 {/* <!-- banner-text --> */}
-                <div class="banner-text">
-                    <div class="callbacks_container">
-                        <ul class="rslides" id="slider3">
+                <div className="banner-text">
+                    <div className="callbacks_container">
+                        <ul className="rslides" id="slider3">
                             <li>
-                                <div class="slider-info">
-                                    <span class="">providing total</span>
+                                <div className="slider-info">
+                                    <span className="">providing total</span>
                                     <h3>health care solution</h3>
-                                    <a class="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
+                                    <a className="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
                                 </div>
                             </li>
                             <li>
-                                <div class="slider-info">
-                                    <span class="">providing total</span>
+                                <div className="slider-info">
+                                    <span className="">providing total</span>
                                     <h3>health care solution</h3>
-                                    <a class="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
+                                    <a className="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
                                 </div>
                             </li>
                             <li>
-                                <div class="slider-info">
-                                    <span class="">providing total</span>
+                                <div className="slider-info">
+                                    <span className="">providing total</span>
                                     <h3>health care solution</h3>
-                                    <a class="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
+                                    <a className="btn btn-primary mt-3" href="services.html" role="button">View Details</a>
                                 </div>
                             </li>
                         </ul>

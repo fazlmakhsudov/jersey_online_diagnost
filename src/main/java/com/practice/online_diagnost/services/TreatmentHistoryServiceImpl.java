@@ -5,6 +5,7 @@ import com.practice.online_diagnost.exceptions.Messages;
 import com.practice.online_diagnost.exceptions.RepositoryException;
 import com.practice.online_diagnost.exceptions.ServiceException;
 import com.practice.online_diagnost.repositories.TreatmentHistoryRepository;
+import com.practice.online_diagnost.repositories.entities.TreatmentHistoryEntity;
 import com.practice.online_diagnost.repositories.entities.builders.TreatmentHistoryEntityBuilder;
 import com.practice.online_diagnost.repositories.util.DBManager;
 import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
@@ -139,6 +140,25 @@ public class TreatmentHistoryServiceImpl implements TreatmentHistoryService {
 
     @Override
     public TreatmentHistoryDomain findForPatients(int patientsId) throws ServiceException {
-        return null;
+        DiagnosService diagnosService = (DiagnosService) ServiceFactory.createService(ServiceType.DIAGNOS_SERVICE);
+        Connection con = null;
+        TreatmentHistoryDomain treatmentHistoryDomain = null;
+        try {
+            con = DBManager.getInstance().getConnectionFromPool();
+
+            TreatmentHistoryEntity treatmentHistoryEntity = treatmentHistoryRepository.readForPatients(patientsId, con);
+            treatmentHistoryDomain = treatmentHistoryDomainBuilder.create(treatmentHistoryRepository.readForPatients(patientsId, con));
+            treatmentHistoryDomain.setDiagnoses(diagnosService.findForTreatmentHistories(treatmentHistoryDomain.getId()));
+            con.commit();
+        } catch (RepositoryException e) {
+            DBManager.rollback(con);
+            LOGGER.severe(Messages.ERR_SERVICE_LAYER_CANNOT_READ_TREATMENTHISTORIES_WITH_LIMITATION);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_TREATMENTHISTORIES_WITH_LIMITATION, e);
+        } catch (Exception e) {
+            LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_CONNECTION);
+        } finally {
+            DBManager.releaseConnection(con);
+        }
+        return treatmentHistoryDomain;
     }
 }

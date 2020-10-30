@@ -25,6 +25,7 @@ public class UserResponseModelBuilder {
                 .birthdate(userDomain.getBirthdate())
                 .createdDate(userDomain.getCreatedDate())
                 .updatedDate(userDomain.getUpdatedDate())
+                .password(userDomain.getPassword())
                 .build();
     }
 

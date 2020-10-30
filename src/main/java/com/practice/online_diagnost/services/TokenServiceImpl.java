@@ -1,7 +1,5 @@
 package com.practice.online_diagnost.services;
 
-import com.practice.online_diagnost.repositories.MySQLUserRepositoryImpl;
-import com.practice.online_diagnost.repositories.UserRepository;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
 import io.jsonwebtoken.Claims;
@@ -56,9 +54,22 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
+    public String generate(String email, int id) {
+        String jwtToken = Jwts.builder()
+                .setSubject(email)
+                .claim("id", id)
+                .setIssuedAt(new Date())
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+        return jwtToken;
+    }
+
+    @Override
     public boolean validate(String token) {
         boolean validationFlag = true;
         try {
+
             Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
             if (claims.getExpiration().compareTo(new Date()) < 0 ||
                     Objects.isNull(userService.find(claims.getSubject()))) {
@@ -69,6 +80,30 @@ public class TokenServiceImpl implements TokenService {
             validationFlag = false;
         }
         return validationFlag;
+    }
+
+    @Override
+    public int getId(String token) {
+        int id = -1;
+        try {
+            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+            id = (int) claims.get("id");
+        } catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+        }
+        return id;
+    }
+
+    @Override
+    public String getEmail(String token) {
+        String email = null;
+        try {
+            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+            email = claims.getSubject();
+        } catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+        }
+        return email;
     }
 
     private static Date toDate(LocalDateTime plusMinutes) {

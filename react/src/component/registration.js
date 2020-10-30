@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, Row, Form, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Footer from './common/footer';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
@@ -26,7 +26,7 @@ export default function Registration() {
         flag = phone && phone.length > 9 ? flag : false;
         flag = gender && gender.length > 3 ? flag : false;
         flag = password && password.length > 5 ? flag : false;
-        flag = confirmpassword && confirmpassword == password ? flag : false;
+        flag = confirmpassword && confirmpassword === password ? flag : false;
 
         return flag;
     }
@@ -61,7 +61,7 @@ export default function Registration() {
         console.log('fetchiing', user);
         axios({
             'method': 'POST',
-            'url': "http://localhost:8080/online-diagnost/test/register",
+            'url': "http://localhost:8080/online-diagnost/users/register",
             'headers': {
                 'Content-Type': 'application/json',
             },
@@ -72,8 +72,11 @@ export default function Registration() {
             if (response.status === 200) {
                 clearFields();
                 sessionStorage.removeItem('token');
+                sessionStorage.removeItem('role');
+                sessionStorage.removeItem('email');
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('role', response.data.role);
+                sessionStorage.setItem('email', email);
                 setRedirectFlag(true);
             }
         }).catch(error => {
@@ -155,9 +158,7 @@ export default function Registration() {
                         <Form.Control name='gender' as="select"
                             autoFocus
                             value={gender}
-                            onChange={e => setGender(e.target.value)}
-
-                        >
+                            onChange={e => setGender(e.target.value)}  >
                             <option value='male'>Male</option>
                             <option value='female'>Female</option>
                         </Form.Control>
@@ -212,7 +213,7 @@ export default function Registration() {
 
             </div>
             <Footer />
-            {redirectFlag ? <Redirect to='/my-cabinet.html' /> : ''}
+            {redirectFlag ? <Redirect to='/my-cabinet' /> : ''}
         </>
     );
 }

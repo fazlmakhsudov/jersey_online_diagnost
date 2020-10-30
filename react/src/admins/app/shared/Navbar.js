@@ -158,10 +158,10 @@ class Navbar extends Component {
                 <Dropdown.Menu className="preview-list navbar-dropdown pb-3">
 
 
-                  <a class="dropdown-item" href="/my-cabinet.html">My cabinet</a>
-                  <a class="dropdown-item" href="#">something</a>
+                  <a class="dropdown-item" href="/home">My cabinet</a>
+          
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" href="/logout">Log out</a>
                 </Dropdown.Menu>
               </Dropdown>
             </li>

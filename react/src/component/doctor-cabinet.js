@@ -1,14 +1,11 @@
 import React from 'react';
 import InnerBanner from './common/inner-banner.js';
 import BreadCrump from './common/bread-crump.js';
-import Section2 from './common/section2.js';
-import { LittleAgile } from './common/agileits.js';
-import Blog from './common/blog.js';
-import Testemonials from './common/testemonials.js';
+
 import Footer from './common/footer.js';
 import { Row, Col, Tab, Tabs, Form, Button } from 'react-bootstrap';
 
-export default function MyCabinet(props) {
+export default function DoctorCabinet(props) {
     return (
         <div >
             <InnerBanner menu='My cabinet' />
@@ -100,21 +97,15 @@ export default function MyCabinet(props) {
                         </Form>
                     </Tab>
 
-                    <Tab eventKey="treatmenthistory" title="Treatment history">
-                        treatmenthistory
+                    <Tab eventKey="requests" title="Requests">
+                        Requests
                     </Tab>
-                    <Tab eventKey="diagnoses" title="Diagnoses">
-                        Diagnoses
-                    </Tab>
+      
                     <Tab eventKey="assignments" title="Assignments">
                         Assignments
                     </Tab>
-                    <Tab eventKey="symptoms" title="Symptoms">
-                        Symptoms
-                    </Tab>
-                    <Tab eventKey="diagnoster" title="Diagnosting history">
-                        Here will be the results of all testing
-                    </Tab>
+                
+                
                 </Tabs>
             </div>
             <div className='justify-content-center text-center'>

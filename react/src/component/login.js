@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, Form, Col } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form} from "react-bootstrap";
 import Footer from './common/footer';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
@@ -38,7 +38,7 @@ export default function Login() {
         console.log('fetchiing', user);
         axios({
             'method': 'POST',
-            'url': "http://localhost:8080/online-diagnost/test/login",
+            'url': "http://localhost:8080/online-diagnost/users/login",
             'headers': {
                 'Content-Type': 'application/json',
             },
@@ -47,10 +47,13 @@ export default function Login() {
         }).then(response => {
             console.log('resp', response);
             if (response.status === 200) {
-            
+
                 sessionStorage.removeItem('token');
+                sessionStorage.removeItem('role');
+                sessionStorage.removeItem('email');
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('role', response.data.role);
+                sessionStorage.setItem('email', email);
                 setRedirectFlag(true);
             }
         }).catch(error => {
@@ -62,8 +65,9 @@ export default function Login() {
     return (
         <>
             <div className="Login">
+            <h2 className='text-center'>Login form</h2>
                 <form>
-                    <FormGroup controlId="email" bsSize="large">
+                    <FormGroup controlId="email">
                         <Form.Label>Email</Form.Label>
                         <FormControl
                             type="email"
@@ -73,7 +77,7 @@ export default function Login() {
                             onChange={e => setEmail(e.target.value)}
                             placeholder='Type your email' />
                     </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
+                    <FormGroup controlId="password">
                         <Form.Label>Password</Form.Label>
                         <FormControl
                             value={password}
@@ -82,15 +86,22 @@ export default function Login() {
                             placeholder='Type your password'
                         />
                     </FormGroup>
-                    <Button block bsSize="large" disabled={!validateForm()} type="button"
+                    <Button block disabled={!validateForm()} type="button"
                         onClick={() => handleSubmit()}>
                         Login
                      </Button>
                 </form>
             </div>
             <Footer />
-            {!redirectFlag ? '' : sessionStorage.getItem('role') == 1 ?
-                <Redirect to='/admin.html' /> : <Redirect to='/my-cabinet.html' />}
+            {!redirectFlag ? ''
+                : sessionStorage.getItem('role') === '1' ?
+                    <Redirect to='/admin' />
+                    : sessionStorage.getItem('role') === '2' ?
+                        <Redirect to='/my-cabinet' />
+                        : sessionStorage.getItem('role') === '3' ?
+                            <Redirect to='/my-cabinet' />
+                            : <Redirect to='/' />
+            }
         </>
     );
 }
