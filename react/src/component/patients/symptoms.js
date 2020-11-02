@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Button, Form, Table } from 'react-bootstrap';
-
+import axios from 'axios';
 
 
 function Symptoms(props) {
+    const [name, setName] = useState('');
+    let parentSetFlag = props.setFlag;
+
+
     let i = 0;
     let diagnoses = props.treatmentHistory ?
         props.treatmentHistory.diagnoses ?
@@ -15,18 +19,59 @@ function Symptoms(props) {
         let date = new Date(number);
         return date.toDateString();
     }
-  
+
+    function handleClick() {
+        let diagnosId = parseInt(sessionStorage.getItem('diagnosId'));
+        let symptom = {
+            id: -1,
+            name: name,
+            diagnosesId: diagnosId,
+            diseasesId: -1,
+        };
+        console.log('fetching symptom', symptom);
+        axios({
+            'method': 'POST',
+            'url': "http://localhost:8080/online-diagnost/symptoms/patient",
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('token')
+            },
+            data: symptom,
+
+        }).then(response => {
+            console.log('resp', response);
+            if (response.status === 200) {
+                parentSetFlag(true);
+                setName('');
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+    function validateForm() {
+        let flag = true;
+
+        flag = name && name.length > 12 ? flag : false;
+
+        return flag;
+    }
+
+
     return (
         <div>
             <Row className='justify-content-center'>
-                <Form className='w-50'>
+                <Form>
                     <Form.Group className='justify-content-center'>
                         <Form.Label>Describe your symptom, that worries you at the moment?</Form.Label>
-                        <Form.Control as="textarea" rows={6} />
+                        <Form.Control as="textarea" rows={6} name='name' value={name} onChange={(e) => setName(e.target.value)}
+                            placeholder="Type symptoms as much detailed in order to be understood distinctly"
+                            minLength='15' />
                     </Form.Group>
                     <Form.Group>
-                        <Button type='reset' className='w-50' variant="outline-secondary">Clear</Button>
-                        <Button className='w-50' variant="outline-primary">Send to doctor</Button>
+                        <Button className='w-50' variant="outline-secondary" onClick={() => setName('')}>Clear</Button>
+                        <Button className='w-50' variant="outline-primary" onClick={() => handleClick()} disabled={!validateForm()}>Send to doctor</Button>
                     </Form.Group>
                 </Form>
             </Row>
@@ -67,7 +112,7 @@ function Symptoms(props) {
                                 diagnos.symptoms.map((symptom, index) =>
                                     <tr key={index}>
                                         <td>{i = i + 1}</td>
-                                        <td>{symptom.name}</td>
+                                        <td style={{whiteSpace:'pre-wrap', textOverflow:'ellipsis', maxWidth:'200px'}}>{symptom.name}</td>
                                         <td>{diagnos.name}</td>
                                         <td>{symptom.diseasesId}</td>
                                         <td>{getDate(symptom.createdDate)}</td>

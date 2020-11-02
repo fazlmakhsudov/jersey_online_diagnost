@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int add(UserDomain item) throws ServiceException {
+    public int add(UserDomain userDomain) throws ServiceException {
         Connection con = null;
         int id = -1;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            id = userRepository.create(userEntityBuilder.create(item), con);
+            id = userRepository.create(userEntityBuilder.create(userDomain), con);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);

@@ -76,6 +76,7 @@ export default function Registration() {
                 sessionStorage.removeItem('email');
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('role', response.data.role);
+                sessionStorage.setItem('diagnosId', response.data.diagnosId);
                 sessionStorage.setItem('email', email);
                 setRedirectFlag(true);
             }
@@ -213,7 +214,7 @@ export default function Registration() {
 
             </div>
             <Footer />
-            {redirectFlag ? <Redirect to='/my-cabinet' /> : ''}
+            {redirectFlag ? <Redirect to='/home' /> : ''}
         </>
     );
 }

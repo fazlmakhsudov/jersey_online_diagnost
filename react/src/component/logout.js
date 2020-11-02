@@ -8,6 +8,7 @@ export default function Logout(props) {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('email');
         sessionStorage.removeItem('role');
+        sessionStorage.removeItem('diagnosId');
     }
 
     return (

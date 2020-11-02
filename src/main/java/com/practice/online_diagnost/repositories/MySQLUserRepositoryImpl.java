@@ -34,7 +34,7 @@ public class MySQLUserRepositoryImpl implements UserRepository {
             statement.setString(k++, user.getGender());
             statement.setDate(k++, user.getBirthdate());
             statement.setString(k, user.getLocation());
-            System.out.println(statement);
+
             statement.executeUpdate();
             try (ResultSet rs = statement.getGeneratedKeys()) {
                 if (rs != null && rs.next()) {

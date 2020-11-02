@@ -1,42 +1,39 @@
 package com.practice.online_diagnost.api.resources.v1;
 
+import com.practice.online_diagnost.api.filters.Secured;
 import com.practice.online_diagnost.api.models.TreatmentHistoryResponseModel;
 import com.practice.online_diagnost.api.models.builders.TreatmentHistoryResponseModelBuilder;
 import com.practice.online_diagnost.exceptions.ServiceException;
-import com.practice.online_diagnost.services.DiagnosService;
 import com.practice.online_diagnost.services.TokenServiceImpl;
 import com.practice.online_diagnost.services.TreatmentHistoryService;
-import com.practice.online_diagnost.services.domains.DiagnosDomain;
 import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-
+@Secured
 @Path("/treatment-history")
 public class TreatmentHistoryResourse {
     private static final Logger LOG = Logger.getLogger(TreatmentHistoryResourse.class.getSimpleName());
 
-    @Path("/user")
+
+    @Path("/patient")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public TreatmentHistoryResponseModel getPatientTreatmentHistory(ContainerRequestContext requestContext) throws ServiceException {
         TreatmentHistoryService treatmentHistoryService = (TreatmentHistoryService) ServiceFactory.createService(ServiceType.TREATMENT_HISTORY_SERVICE);
         String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        int patientId = TokenServiceImpl.getInstance().getId(token);
+        int patientId = TokenServiceImpl.getInstance().getOwnerId(token);
 
         TreatmentHistoryDomain treatmentHistoryDomain = treatmentHistoryService.findForPatients(patientId);
 
@@ -44,28 +41,17 @@ public class TreatmentHistoryResourse {
                 : new TreatmentHistoryResponseModelBuilder().create(treatmentHistoryDomain);
     }
 
-
-    @Path("{searchParameter}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DiagnosDomain> getAuthors(@PathParam("searchParameter") String searchParameter) throws ServiceException {
+    public List<TreatmentHistoryResponseModel> getPatientTreatmentHistories(ContainerRequestContext requestContext) throws ServiceException {
+        TreatmentHistoryService treatmentHistoryService = (TreatmentHistoryService) ServiceFactory.createService(ServiceType.TREATMENT_HISTORY_SERVICE);
+        String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        int ownerId = TokenServiceImpl.getInstance().getOwnerId(token);
 
-        return ((DiagnosService) ServiceFactory.createService(ServiceType.DIAGNOS_SERVICE)).findForTreatmentHistories(Integer.parseInt(searchParameter));
+        List<TreatmentHistoryDomain> treatmentHistoryDomains = treatmentHistoryService.findAll();
+
+        return ownerId != 2 && ownerId != 1 ? new ArrayList<>()
+                : new TreatmentHistoryResponseModelBuilder().create(treatmentHistoryDomains);
     }
 
-
-    private String encryptPassword(final String password) {
-        if (Objects.isNull(password) || password.isEmpty()) {
-            return null;
-        }
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(password.getBytes(), 0, password.length());
-            return new BigInteger(1, digest.digest()).toString(16);
-        } catch (NoSuchAlgorithmException e) {
-            LOG.severe(e.getMessage());
-        }
-        return "";
-    }
 }

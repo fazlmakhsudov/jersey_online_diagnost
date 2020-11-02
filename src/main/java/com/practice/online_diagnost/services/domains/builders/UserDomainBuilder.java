@@ -4,24 +4,34 @@ import com.practice.online_diagnost.api.models.UserRequestModel;
 import com.practice.online_diagnost.repositories.entities.UserEntity;
 import com.practice.online_diagnost.services.domains.UserDomain;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDomainBuilder {
     public UserDomain create(UserRequestModel userModel) {
         return UserDomain.builder()
                 .id(userModel.getId())
-                .name(userModel.getName())
-                .surname(userModel.getSurname())
-                .email(userModel.getEmail())
-                .password(userModel.getPassword())
-                .phone(userModel.getPhone())
+                .name(Objects.isNull(userModel.getName()) ?
+                        "" : userModel.getName())
+                .surname(Objects.isNull(userModel.getSurname()) ?
+                        "" :userModel.getSurname())
+                .email(Objects.isNull(userModel.getEmail()) ?
+                        "" :userModel.getEmail())
+                .password(Objects.isNull(userModel.getPassword()) ?
+                        "" :userModel.getPassword())
+                .phone(Objects.isNull(userModel.getPhone()) ?
+                        "" :userModel.getPhone())
                 .medicsId(userModel.getMedicsId())
                 .patientsId(userModel.getPatientsId())
                 .rolesId(userModel.getRolesId())
-                .gender(userModel.getGender().equalsIgnoreCase("female") ? "female" : "male")
-                .location(userModel.getLocation())
-                .birthdate(userModel.getBirthdate())
+                .gender(!Objects.isNull(userModel.getGender()) && userModel.getGender().equalsIgnoreCase("female") ?
+                        "female" : "male")
+                .location(Objects.isNull(userModel.getLocation()) ?
+                        "" :userModel.getLocation())
+                .birthdate(Objects.isNull(userModel.getBirthdate()) ?
+                        Date.valueOf("2012-12-12") : userModel.getBirthdate())
                 .build();
     }
 

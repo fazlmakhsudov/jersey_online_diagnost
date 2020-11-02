@@ -3,7 +3,7 @@ import InnerBanner from './common/inner-banner.js';
 import BreadCrump from './common/bread-crump.js';
 
 
-import Profile from './patients/profile.js';
+import Profile from './common/profile.js';
 import TreatmentHistory from './patients/treatmenthistory.js';
 import Diagnoses from './patients/diagnoses.js';
 import Symptoms from './patients/symptoms.js';
@@ -16,7 +16,7 @@ import axios from 'axios';
 
 
 export default function PatientCabinet(props) {
-    let URL = 'http://localhost:8080/online-diagnost/treatment-history/user';
+    let URL = 'http://localhost:8080/online-diagnost/treatment-history/patient';
     const [treatmentHistory, setTreatmentHistory] = useState();
     const [flag, setFlag] = useState(true);
     const [diagnoses, setDiagnoses] = useState([]);
@@ -54,7 +54,9 @@ export default function PatientCabinet(props) {
 
 
     useEffect(() => {
+        console.log('pat cab 1')
         if (flag) {
+            console.log('pat cab 2')
             getTreatmentHistory();
             setFlag(false);
         }
@@ -81,7 +83,7 @@ export default function PatientCabinet(props) {
                         <Assignments diagnoses={diagnoses} />
                     </Tab>
                     <Tab eventKey="symptoms" title="Symptoms" className='container mt-5'>
-                        <Symptoms treatmentHistory={treatmentHistory} />
+                        <Symptoms treatmentHistory={treatmentHistory} setFlag={setFlag} />
                     </Tab>
                     <Tab eventKey="diagnoster" title="Diagnosting history" className='container mt-5'>
                         Here will be the results of all testing

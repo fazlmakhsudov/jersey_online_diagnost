@@ -16,7 +16,7 @@ public class PatientResponseModelBuilder {
                 .condition(patientDomain.getCondition())
                 .diseasesId(patientDomain.getDiseasesId())
                 .treatmentHistory(new TreatmentHistoryResponseModelBuilder().create(patientDomain.getTreatmentHistory()))
-                .userDomain(new UserResponseModelBuilder().create(patientDomain.getUserDomain()))
+                .user(new UserResponseModelBuilder().create(patientDomain.getUserDomain()))
                 .build();
     }
 

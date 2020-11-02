@@ -13,6 +13,7 @@ export default function Profile(props) {
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
     const [flag, setFlag] = useState(true);
+    const [user, setUser] = useState({});
     let setParentFlag = props.setFlag;
 
     function getUser() {
@@ -28,6 +29,7 @@ export default function Profile(props) {
 
             if (response.status === 200) {
                 let user = response.data;
+                setUser(user);
                 setName(user.name);
                 setSurname(user.surname);
                 setEmail(user.email);
@@ -37,6 +39,9 @@ export default function Profile(props) {
                 setGender(user.gender);
                 setPassword(user.password);
                 setConfirmpassword(user.password);
+                if (props.medicFlag) {
+                    props.setMedicsId(user.medicsId);
+                }
             }
 
         }).catch(error => {
@@ -61,16 +66,16 @@ export default function Profile(props) {
   
 
     async function handleSubmit() {
-        let user = {
-            id: -1,
+        let userdata = {
+            id: user.id,
             name: name,
             surname: surname,
             email: email,
             password: password,
             phone: phone,
-            patientsId: -1,
-            medicsId: -1,
-            rolesId: -1,
+            patientsId: user.patientsId,
+            medicsId: user.medicsId,
+            rolesId: user.rolesId,
             location: location,
             birthdate: birthdate,
             gender: gender,
@@ -84,7 +89,7 @@ export default function Profile(props) {
                 'Content-Type': 'application/json',
                 'Authorization': sessionStorage.getItem('token')
             },
-            data: user,
+            data: userdata,
 
         }).then(response => {
         
@@ -114,6 +119,7 @@ export default function Profile(props) {
         if (flag) {
             getUser();
             setFlag(false);
+       
         }
     });
 

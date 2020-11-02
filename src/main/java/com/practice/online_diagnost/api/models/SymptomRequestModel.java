@@ -1,14 +1,13 @@
 package com.practice.online_diagnost.api.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SymptomRequestModel {
     private int id;
     private String name;

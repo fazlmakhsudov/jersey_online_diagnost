@@ -35,7 +35,7 @@ export default function Login() {
             gender: '',
 
         };
-        console.log('fetchiing', user);
+    
         axios({
             'method': 'POST',
             'url': "http://localhost:8080/online-diagnost/users/login",
@@ -53,6 +53,8 @@ export default function Login() {
                 sessionStorage.removeItem('email');
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('role', response.data.role);
+                sessionStorage.setItem('diagnosId', response.data.diagnosId);
+                
                 sessionStorage.setItem('email', email);
                 setRedirectFlag(true);
             }
@@ -99,7 +101,7 @@ export default function Login() {
                     : sessionStorage.getItem('role') === '2' ?
                         <Redirect to='/my-cabinet' />
                         : sessionStorage.getItem('role') === '3' ?
-                            <Redirect to='/my-cabinet' />
+                            <Redirect to='/home' />
                             : <Redirect to='/' />
             }
         </>

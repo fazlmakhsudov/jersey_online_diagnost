@@ -47,19 +47,32 @@ public class TokenServiceImpl implements TokenService {
         String jwtToken = Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(30L)))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
         return jwtToken;
     }
 
     @Override
-    public String generate(String email, int id) {
+    public String generate(String email, int ownerId) {
         String jwtToken = Jwts.builder()
                 .setSubject(email)
-                .claim("id", id)
+                .claim("ownerId", ownerId)
                 .setIssuedAt(new Date())
-                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(30L)))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+        return jwtToken;
+    }
+
+    @Override
+    public String generate(String email, int ownerId, int diagnosId) {
+        String jwtToken = Jwts.builder()
+                .setSubject(email)
+                .claim("ownerId", ownerId)
+                .claim("diagnosId", diagnosId)
+                .setIssuedAt(new Date())
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(30L)))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
         return jwtToken;
@@ -83,11 +96,23 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public int getId(String token) {
+    public int getOwnerId(String token) {
         int id = -1;
         try {
             Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-            id = (int) claims.get("id");
+            id = (int) claims.get("ownerId");
+        } catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+        }
+        return id;
+    }
+
+    @Override
+    public int getDiagnosId(String token) {
+        int id = -1;
+        try {
+            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+            id = (int) claims.get("diagnosId");
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
         }

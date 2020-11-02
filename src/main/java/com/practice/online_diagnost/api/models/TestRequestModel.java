@@ -1,8 +1,6 @@
 package com.practice.online_diagnost.api.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -10,9 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class TestRequestModel {
     private int id;
-    private String name;
-    private double age;
-    private List<Date> dates;
 }

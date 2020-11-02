@@ -5,14 +5,17 @@ import com.practice.online_diagnost.repositories.entities.QuestionEntity;
 import com.practice.online_diagnost.services.domains.QuestionDomain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class QuestionDomainBuilder {
     public QuestionDomain create(QuestionRequestModel questionModel) {
         return QuestionDomain.builder()
                 .id(questionModel.getId())
-                .name(questionModel.getName())
-                .answer(questionModel.getAnswer())
+                .name(Objects.isNull(questionModel.getName()) ?
+                        "" : questionModel.getName())
+                .answer(Objects.isNull(questionModel.getAnswer()) ?
+                        "" : questionModel.getAnswer())
                 .questionariesId(questionModel.getQuestionariesId())
                 .build();
     }

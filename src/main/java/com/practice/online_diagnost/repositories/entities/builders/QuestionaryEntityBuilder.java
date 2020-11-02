@@ -12,7 +12,6 @@ public class QuestionaryEntityBuilder {
         return QuestionaryEntity.builder()
                 .id(questionaryDomain.getId())
                 .name(questionaryDomain.getName())
-                .questions(new QuestionEntityBuilder().create(questionaryDomain.getQuestions()))
                 .createdDate(questionaryDomain.getCreatedDate())
                 .updatedDate(questionaryDomain.getUpdatedDate())
                 .build();

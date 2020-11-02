@@ -24,6 +24,7 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
             statement.setString(1, symptom.getName());
             statement.setInt(2, symptom.getDiagnosesId());
             statement.setInt(3, symptom.getDiseasesId());
+
             rowInserted = statement.executeUpdate();
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_SYMPTOM);

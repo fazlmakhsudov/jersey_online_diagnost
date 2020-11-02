@@ -12,5 +12,7 @@ import lombok.ToString;
 public class PatientEntity {
     private int id;
     private int diseasesId;
+    private TreatmentHistoryEntity treatmentHistoryEntity;
+    private UserEntity userEntity;
     private String condition;
 }

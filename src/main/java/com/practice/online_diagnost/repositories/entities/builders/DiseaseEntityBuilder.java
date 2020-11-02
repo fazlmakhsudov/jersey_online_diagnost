@@ -5,6 +5,7 @@ import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
 import com.practice.online_diagnost.services.domains.DiseaseDomain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DiseaseEntityBuilder {
@@ -12,8 +13,6 @@ public class DiseaseEntityBuilder {
         return DiseaseEntity.builder()
                 .id(diseaseDomain.getId())
                 .name(diseaseDomain.getName())
-                .symptoms(new SymptomEntityBuilder().create(diseaseDomain.getSymptoms()))
-                .patients(new PatientEntityBuilder().create(diseaseDomain.getPatients()))
                 .createdDate(diseaseDomain.getCreatedDate())
                 .build();
     }

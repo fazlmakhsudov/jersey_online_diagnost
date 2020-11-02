@@ -33,10 +33,10 @@ public class DiagnosServiceImpl implements DiagnosService {
     @Override
     public int add(DiagnosDomain item) throws ServiceException {
         Connection con = null;
-        int row = -1;
+        int id = -1;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            row = diagnosRepository.create(diagnosEntityBuilder.create(item), con);
+            id = diagnosRepository.create(diagnosEntityBuilder.create(item), con);
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
@@ -47,7 +47,7 @@ public class DiagnosServiceImpl implements DiagnosService {
         } finally {
             DBManager.releaseConnection(con);
         }
-        return row;
+        return id;
     }
 
     @Override

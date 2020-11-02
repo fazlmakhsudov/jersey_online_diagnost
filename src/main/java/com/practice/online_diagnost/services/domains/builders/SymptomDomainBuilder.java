@@ -5,13 +5,15 @@ import com.practice.online_diagnost.repositories.entities.SymptomEntity;
 import com.practice.online_diagnost.services.domains.SymptomDomain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SymptomDomainBuilder {
     public SymptomDomain create(SymptomRequestModel symptomModel) {
         return SymptomDomain.builder()
                 .id(symptomModel.getId())
-                .name(symptomModel.getName())
+                .name(Objects.isNull(symptomModel.getName()) ?
+                        "" : symptomModel.getName())
                 .diagnosesId(symptomModel.getDiagnosesId())
                 .diseasesId(symptomModel.getDiseasesId())
 

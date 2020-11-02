@@ -37,7 +37,7 @@ export default function Header(props) {
                             <a className="nav-link  text-white text-capitalize" href="/contact">EN | RU</a>
                         </li> */}
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle  text-white" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            <span className="nav-link dropdown-toggle  text-white" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 {
                                     sessionStorage.getItem('token') != null ?
@@ -47,10 +47,10 @@ export default function Header(props) {
                                         </>
                                         : <span className='mdi mdi-account-outline'></span>
                                 }
-                            </a>
+                            </span>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {
-                                    sessionStorage.getItem('token') ?
+                                    sessionStorage.getItem('token') === null ?
 
                                         <>
                                             <a className="dropdown-item" href="/login">Log in</a>

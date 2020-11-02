@@ -5,13 +5,15 @@ import com.practice.online_diagnost.repositories.entities.AssignmentEntity;
 import com.practice.online_diagnost.services.domains.AssignmentDomain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AssignmentDomainBuilder {
     public AssignmentDomain create(AssignmentRequestModel assignmentModel) {
         return AssignmentDomain.builder()
                 .id(assignmentModel.getId())
-                .name(assignmentModel.getName())
+                .name(Objects.isNull(assignmentModel.getName())
+                        ? "" : assignmentModel.getName())
                 .diagnosesId(assignmentModel.getDiagnosesId())
                 .medicsId(assignmentModel.getMedicsId())
                 .build();

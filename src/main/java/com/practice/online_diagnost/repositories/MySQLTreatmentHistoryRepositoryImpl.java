@@ -19,15 +19,21 @@ public class MySQLTreatmentHistoryRepositoryImpl implements TreatmentHistoryRepo
     @Override
     public int create(TreatmentHistoryEntity treatmentHistory, Connection con) throws RepositoryException {
         final String query = "INSERT INTO treatment_histories (patients_id) VALUES (?);";
-        int rowInserted;
-        try (PreparedStatement statement = con.prepareStatement(query)) {
+        int id = -1;
+        try (PreparedStatement statement = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, treatmentHistory.getPatientsId());
-            rowInserted = statement.executeUpdate();
+
+            statement.executeUpdate();
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs != null && rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_TREATMENTHISTORY);
             throw new RepositoryException(Messages.ERR_CANNOT_INSERT_TREATMENTHISTORY, e);
         }
-        return rowInserted;
+        return id;
     }
 
     @Override

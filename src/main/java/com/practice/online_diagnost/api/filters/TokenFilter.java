@@ -30,7 +30,6 @@ public class TokenFilter implements ContainerRequestFilter {
         if (!Objects.isNull(authorizationHeader)) {
 //            String token = authorizationHeader.substring(AUTHENTIFICATION_PREFIX.length()).trim();
             validated = tokenService.validate(authorizationHeader);
-
         }
         if (!validated) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());

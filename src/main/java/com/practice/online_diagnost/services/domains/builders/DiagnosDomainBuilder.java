@@ -4,6 +4,7 @@ import com.practice.online_diagnost.api.models.DiagnosRequestModel;
 import com.practice.online_diagnost.repositories.entities.DiagnosEntity;
 import com.practice.online_diagnost.services.domains.DiagnosDomain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,11 +13,8 @@ public class DiagnosDomainBuilder {
     public DiagnosDomain create(DiagnosRequestModel diagnosModel) {
         return DiagnosDomain.builder()
                 .id(diagnosModel.getId())
-                .name(diagnosModel.getName())
-//                .assignments(Objects.isNull(diagnosModel.getAssignments()) ? null :
-//                        new AssignmentDomainBuilder().create2(diagnosModel.getAssignments()))
-//                .symptoms(Objects.isNull(diagnosModel.getAssignments()) ? null
-//                        : new SymptomDomainBuilder().create2(diagnosModel.getSymptoms()))
+                .name(Objects.isNull(diagnosModel.getName())
+                        ? "" :  diagnosModel.getName())
                 .treatmentHistoriesId(diagnosModel.getTreatmentHistoriesId())
                 .build();
     }
@@ -32,9 +30,9 @@ public class DiagnosDomainBuilder {
         return DiagnosDomain.builder()
                 .id(diagnosEntity.getId())
                 .name(diagnosEntity.getName())
-                .assignments(Objects.isNull(diagnosEntity.getAssignments()) ? null :
+                .assignments(Objects.isNull(diagnosEntity.getAssignments()) ? new ArrayList<>() :
                         new AssignmentDomainBuilder().create(diagnosEntity.getAssignments()))
-                .symptoms(Objects.isNull(diagnosEntity.getAssignments()) ? null
+                .symptoms(Objects.isNull(diagnosEntity.getAssignments()) ? new ArrayList<>()
                         : new SymptomDomainBuilder().create(diagnosEntity.getSymptoms()))
                 .treatmentHistoriesId(diagnosEntity.getTreatmentHistoriesId())
                 .createdDate(diagnosEntity.getCreatedDate())

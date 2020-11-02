@@ -13,6 +13,7 @@ import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -122,7 +123,7 @@ public class PatientServiceImpl implements PatientService {
                 (TreatmentHistoryService) ServiceFactory.createService(ServiceType.TREATMENT_HISTORY_SERVICE);
         UserService userService = (UserService) ServiceFactory.createService(ServiceType.USER_SERVICE);
         Connection con = null;
-        List<PatientDomain> patientDomains = null;
+        List<PatientDomain> patientDomains = new ArrayList<>();
         try {
             con = DBManager.getInstance().getConnectionFromPool();
             patientDomains = patientDomainBuilder.create(patientRepository.readAll(con));
@@ -130,12 +131,14 @@ public class PatientServiceImpl implements PatientService {
                 patientDomain.setTreatmentHistory(treatmentHistoryService.findForPatients(patientDomain.getId()));
                 patientDomain.setUserDomain(userService.findForPatients(patientDomain.getId()));
             }
+
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
             LOGGER.severe(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENTS);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENTS, e);
         } catch (Exception e) {
+
             LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_CONNECTION);
         } finally {
             DBManager.releaseConnection(con);

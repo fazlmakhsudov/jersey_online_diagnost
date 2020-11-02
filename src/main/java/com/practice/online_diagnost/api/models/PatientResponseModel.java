@@ -14,5 +14,5 @@ public class PatientResponseModel {
     private int diseasesId;
     private String condition;
     private TreatmentHistoryResponseModel treatmentHistory;
-    private UserResponseModel userDomain;
+    private UserResponseModel user;
 }

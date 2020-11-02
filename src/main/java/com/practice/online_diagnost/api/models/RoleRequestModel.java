@@ -1,12 +1,12 @@
 package com.practice.online_diagnost.api.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoleRequestModel {
     private int id;
     private String name;

@@ -4,6 +4,7 @@ import com.practice.online_diagnost.api.models.TreatmentHistoryRequestModel;
 import com.practice.online_diagnost.repositories.entities.TreatmentHistoryEntity;
 import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,8 +13,6 @@ public class TreatmentHistoryDomainBuilder {
     public TreatmentHistoryDomain create(TreatmentHistoryRequestModel treatmentHistoryModel) {
         return TreatmentHistoryDomain.builder()
                 .id(treatmentHistoryModel.getId())
-//                .diagnoses(Objects.isNull(treatmentHistoryModel.getDiagnoses()) ? null
-//                        : new DiagnosDomainBuilder().create2(treatmentHistoryModel.getDiagnoses()))
                 .patientsId(treatmentHistoryModel.getPatientsId())
 
                 .build();
@@ -28,7 +27,7 @@ public class TreatmentHistoryDomainBuilder {
     public TreatmentHistoryDomain create(TreatmentHistoryEntity treatmentHistoryEntity) {
         return TreatmentHistoryDomain.builder()
                 .id(treatmentHistoryEntity.getId())
-                .diagnoses(Objects.isNull(treatmentHistoryEntity.getDiagnoses()) ? null
+                .diagnoses(Objects.isNull(treatmentHistoryEntity.getDiagnoses()) ? new ArrayList<>()
                         : new DiagnosDomainBuilder().create(treatmentHistoryEntity.getDiagnoses()))
                 .patientsId(treatmentHistoryEntity.getPatientsId())
                 .createdDate(treatmentHistoryEntity.getCreatedDate())

@@ -34,21 +34,23 @@ public class TreatmentHistoryServiceImpl implements TreatmentHistoryService {
     @Override
     public int add(TreatmentHistoryDomain item) throws ServiceException {
         Connection con = null;
-        int row = -1;
+        int id = -1;
         try {
             con = DBManager.getInstance().getConnectionFromPool();
-            row = treatmentHistoryRepository.create(treatmentHistoryEntityBuilder.create(item), con);
+
+            id = treatmentHistoryRepository.create(treatmentHistoryEntityBuilder.create(item), con);
+
             con.commit();
         } catch (RepositoryException e) {
             DBManager.rollback(con);
             LOGGER.severe(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_TREATMENTHISTORY);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_TREATMENTHISTORY, e);
         } catch (Exception e) {
-            LOGGER.severe(Messages.ERR_CANNOT_OBTAIN_CONNECTION);
+            LOGGER.severe(e.getMessage());
         } finally {
             DBManager.releaseConnection(con);
         }
-        return row;
+        return id;
     }
 
     @Override

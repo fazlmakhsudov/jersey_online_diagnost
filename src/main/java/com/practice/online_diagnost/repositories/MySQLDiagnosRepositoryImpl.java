@@ -19,16 +19,21 @@ public class MySQLDiagnosRepositoryImpl implements DiagnosRepository {
     @Override
     public int create(DiagnosEntity diagnos, Connection con) throws RepositoryException {
         final String query = "INSERT INTO diagnoses (name, treatment_histories_id) VALUES (?,?);";
-        int rowInserted;
-        try (PreparedStatement statement = con.prepareStatement(query)) {
+        int id = -1;
+        try (PreparedStatement statement = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, diagnos.getName());
             statement.setInt(2, diagnos.getTreatmentHistoriesId());
-            rowInserted = statement.executeUpdate();
+            statement.executeUpdate();
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs != null && rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_INSERT_DIAGNOS);
             throw new RepositoryException(Messages.ERR_CANNOT_INSERT_DIAGNOS, e);
         }
-        return rowInserted;
+        return id;
     }
 
     @Override

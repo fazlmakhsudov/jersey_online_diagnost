@@ -4,6 +4,7 @@ import com.practice.online_diagnost.api.models.DiseaseRequestModel;
 import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
 import com.practice.online_diagnost.services.domains.DiseaseDomain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,11 +13,8 @@ public class DiseaseDomainBuilder {
     public DiseaseDomain create(DiseaseRequestModel diseaseModel) {
         return DiseaseDomain.builder()
                 .id(diseaseModel.getId())
-                .name(diseaseModel.getName())
-//                .symptoms(Objects.isNull(diseaseModel.getSymptoms()) ? null
-//                        : new SymptomDomainBuilder().create2(diseaseModel.getSymptoms()))
-//                .patients(Objects.isNull(diseaseModel.getPatients()) ? null
-//                        : new PatientDomainBuilder().create2(diseaseModel.getPatients()))
+                .name(Objects.isNull(diseaseModel.getName()) ?
+                        "" : diseaseModel.getName())
                 .build();
     }
 
@@ -30,9 +28,9 @@ public class DiseaseDomainBuilder {
         return DiseaseDomain.builder()
                 .id(diseaseEntity.getId())
                 .name(diseaseEntity.getName())
-                .symptoms(Objects.isNull(diseaseEntity.getSymptoms()) ? null
+                .symptoms(Objects.isNull(diseaseEntity.getSymptoms()) ? new ArrayList<>()
                         : new SymptomDomainBuilder().create(diseaseEntity.getSymptoms()))
-                .patients(Objects.isNull(diseaseEntity.getPatients()) ? null
+                .patients(Objects.isNull(diseaseEntity.getPatients()) ? new ArrayList<>()
                         : new PatientDomainBuilder().create(diseaseEntity.getPatients()))
                 .createdDate(diseaseEntity.getCreatedDate())
                 .build();
