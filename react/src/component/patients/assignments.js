@@ -51,7 +51,7 @@ export default function Assignments(props) {
                                 diagnos.assignments.map((assignment, index) =>
                                     <tr key={index}>
                                         <td>{i = i + 1}</td>
-                                        <td>{assignment.name}</td>
+                                        <td style={{whiteSpace:'pre-wrap', textOverflow:'ellipsis', maxWidth:'200px'}}>{assignment.name}</td>
                                         <td>{diagnos.name}</td>
                                         <td>{assignment.medicsId}</td>
                                         <td>{getDate(assignment.createdDate)}</td>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 export default function ContactForm(props) {
     return (
@@ -6,7 +7,7 @@ export default function ContactForm(props) {
             <div className="container py-sm-5 pt-0 pb-5">
                 <div className="title-section text-center pb-lg-5">
                     <h4>24/7</h4>
-                    <h3 className="w3ls-title text-center text-capitalize">affordable medicare</h3>
+                    <h3 className="w3ls-title text-center text-capitalize">affordable medicien</h3>
                 </div>
                 <div className="row contact-form pt-lg-5">
                     {/* <!-- contact details --> */}
@@ -61,37 +62,17 @@ export default function ContactForm(props) {
                     <div className="col-lg-8 wthree-form-left px-lg-5 mt-lg-0 mt-5">
                         {/* <!-- contact form grid --> */}
                         <div className="contact-top1">
-                            <h5 className="sub-title-wthree">contact form</h5>
-                            <form action="#" method="get" className="pc-contact">
-                                <div className="row">
-                                    <div className="col-md-6 form-group">
-                                        <label htmlFor="contact-name">Name
-                                        <span>*</span>
-                                        </label>
-                                        <input type="text" className="form-control" id="contact-name" required />
-                                    </div>
-                                    <div className="col-md-6 form-group">
-                                        <label htmlFor="contact-email">Email
-                                        <span>*</span>
-                                        </label>
-                                        <input type="email" className="form-control" id="contact-email" required />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contact-subject">Subject
-                                    <span>*</span>
-                                    </label>
-                                    <input type="text" className="form-control" id="contact-subject" required />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contact-message">
-                                        Your Message
-                                    <span>*</span>
-                                    </label>
-                                    <textarea className="form-control" rows="5" id="contact-message" required></textarea>
-                                </div>
-                                <button type="submit" className="btn btn-primary btn-block w-25">Send</button>
-                            </form>
+                            <h5 className="sub-title-wthree text-center">request form</h5>
+                            <Form className="pc-contact">
+                                <Form.Check className="text-center mt-4 mb-3" custom type='checkbox' id={`custom-checkbox1`} label={`Conditional question 1`} />
+                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox2`} label={`Conditional question 2`} />
+                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox3`} label={`Conditional question 3`} />
+                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox4`} label={`Conditional question 4`} />
+                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox5`} label={`Conditional question 5`} />
+                                <Form.Check  className="text-center mb-3" custom type='checkbox' id={`custom-checkbox6`} label={`Conditional question 6`} />
+                                <div className="text-center"><Button  style={{minWidth:'30%'}}>Send</Button></div>
+                            </Form>
+
                         </div>
                         {/* <!--  //contact form grid ends here --> */}
                     </div>

@@ -60,12 +60,13 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public boolean update(PatientEntity patient, Connection con) throws RepositoryException {
-        final String query = "UPDATE patients SET diseases_id = ?, condition = ? WHERE id = ?;";
+        final String query = "UPDATE patients SET diseases_id = ?, `condition` = ? WHERE id = ?;";
         boolean rowUpdated;
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, patient.getDiseasesId());
             statement.setString(2, patient.getCondition());
             statement.setInt(3, patient.getId());
+
             rowUpdated = statement.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.severe(Messages.ERR_CANNOT_UPDATE_PATIENT);
@@ -113,7 +114,7 @@ public class MySQLPatientRepositoryImpl implements PatientRepository {
 
     @Override
     public List<PatientEntity> readForDiseases(int diseasesId, Connection con) throws RepositoryException {
-        final String query = "SELECT * FROM patients where diseases_id = ?;";
+        final String query = "SELECT * FROM patients where diseases_id = ? AND id != -1;";
         List<PatientEntity> patientList = new ArrayList<>();
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, diseasesId);

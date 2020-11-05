@@ -40,8 +40,8 @@ public class Lb4 extends Lb3 {
             patientDiagnos.get(patientId).stream().forEach(diagnos -> {
                 Double[] alfaBi = new Double[this.P];
                 System.out.println("Patient : " + patientId.intValue());
-                System.out.println("Proba Sij/Bi : " + Arrays.toString(mTableProbalitySijBi.get(diagnos)));
-                double[] arraySijBi = mTableProbalitySijBi.get(diagnos);
+                System.out.println("Proba Sij/Bi : " + Arrays.toString(tableProbalitySijBi.get(diagnos)));
+                double[] arraySijBi = tableProbalitySijBi.get(diagnos);
                 for (int j = 0; j < this.P; j++) {
 //                    if (j == 1 && diagnos == 1 || j == 5 && diagnos == 2) {
 //                        System.out.println("---------------------------------");
@@ -53,9 +53,9 @@ public class Lb4 extends Lb3 {
 //                        System.out.println("------------------------------------");
 //                    }
                     if (patient[j] == 1) {
-                        alfaBi[j] = patient[j] * log2(arraySijBi[j] / mProbabilitySj[j]);
+                        alfaBi[j] = patient[j] * log2(arraySijBi[j] / probabilitySj[j]);
                     } else {
-                        alfaBi[j] = (1 - patient[j]) * log2((1 - arraySijBi[j]) / (1 - mProbabilitySj[j]));
+                        alfaBi[j] = (1 - patient[j]) * log2((1 - arraySijBi[j]) / (1 - probabilitySj[j]));
                     }
                 }
                 map.put(diagnos, alfaBi);
@@ -89,7 +89,7 @@ public class Lb4 extends Lb3 {
                 for (int j = 0; j < this.P; j++) {
                     tempLi += aBiForDiagnos[j];
                 }
-                tempLi += log2(mProbabilityBi.get(diagnos));
+                tempLi += log2(probabilityBi.get(diagnos));
                 liValues.put(diagnos, tempLi);
                 probabilityQuouteBiDmxValues.put(diagnos, Math.pow(2, tempLi));
             });

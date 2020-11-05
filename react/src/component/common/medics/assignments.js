@@ -15,6 +15,7 @@ export default function Assignments(props) {
     const [showCard, setShowCard] = useState(false);
     const [treatmentHistoriesId, setTreatmentHistoriesId] = useState(-1);
     const [response, setResponse] = useState('');
+    const [diseasesId, setDiseasesId] = useState(-1);
 
     function handleUpdate(assignment) {
         setPatientDiagnoses(props.diagnosesMap[getAssignmentsMapData(assignment.id) + 'treatmentHistory']);
@@ -30,6 +31,7 @@ export default function Assignments(props) {
         setPatientDiagnoses(props.diagnosesMap[getAssignmentsMapData(assignment.id) + 'treatmentHistory']);
         setName('');
         setAssignment(assignment);
+        setDiseasesId(getAssignmentsMapData(assignment.id, 'patientDiseasesId'));
         setTreatmentHistoriesId(getAssignmentsMapData(assignment.id));
         setShowCard(true);
     }
@@ -126,15 +128,69 @@ export default function Assignments(props) {
     function getAssignmentsMapData(assignmentId, key = 'treatmentHistoriesId') {
         let array = props.assignmentsMap;
         if (assignmentId && Object.keys(array).length > 0) {
-            let value = key === 'user' ?
-                array[assignmentId + 'assignment'].user :
-                key === 'diagnosName' ?
-                    array[assignmentId + 'assignment'].diagnosName : array[assignmentId + 'assignment'].treatmentHistoriesId
+            // let value = key === 'user' ?
+            //     array[assignmentId + 'assignment'].user :
+            //     key === 'diagnosName' ?
+            //         array[assignmentId + 'assignment'].diagnosName : array[assignmentId + 'assignment'].treatmentHistoriesId
+            // return value;
+            let value;
+            switch (key) {
+                case 'user':
+                    value = array[assignmentId + 'assignment'].user;
+                    break;
+                case 'diagnosName':
+                    value = array[assignmentId + 'assignment'].diagnosName;
+                    break;
+                case 'patientsId':
+                    value = array[assignmentId + 'assignment'].patientsId;
+                    break;
+                case 'patientsCondition':
+                    value = array[assignmentId + 'assignment'].patientsCondition;
+                    break;
+                case 'patientDiseasesId':
+                    value = array[assignmentId + 'assignment'].patientDiseasesId;
+                    break;
+                default:
+                    value = array[assignmentId + 'assignment'].treatmentHistoriesId;
+            }
             return value;
         }
         return assignmentId;
     }
 
+    function handleDiseasesIdChangle(diseasesId) {
+        let patientToSend = {
+            id: getAssignmentsMapData(assignment.id, 'patientsId'),
+            condition: getAssignmentsMapData(assignment.id, 'patientsCondition'),
+            diseasesId: diseasesId
+        };
+        axios({
+            'method': 'PUT',
+            'url': "http://localhost:8080/online-diagnost/patients",
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('token')
+            },
+            data: patientToSend,
+
+        }).then(response => {
+            if (response.status === 200) {
+                console.log('updated patient');
+                setDiseasesId(diseasesId);
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+
+
+
+    function getDate(number) {
+        let date = new Date(number);
+        return date.toDateString();
+    }
 
     useEffect(() => {
         if (flag) {
@@ -142,11 +198,6 @@ export default function Assignments(props) {
             setFlag(false);
         }
     });
-
-    function getDate(number) {
-        let date = new Date(number);
-        return date.toDateString();
-    }
 
     return (
         <div>
@@ -269,6 +320,22 @@ export default function Assignments(props) {
                     <div className='row'>
                         <span className='col-5 pl-3' >Treatment history id:  </span>
                         <span className='col-7'> {getAssignmentsMapData(assignment.id)}</span>
+                    </div>
+                    <div className='row'>
+                        <span className='col-5 pl-3' >Disease:  </span>
+
+                        <Form.Group className='col-7'>
+                            <Form.Control as="select" value={diseasesId} onChange={(e) => handleDiseasesIdChangle(e.target.value)}>
+
+                                {
+                                    Object.values(props.diseasesMap).map((disease, index) =>
+                                        <option key={index} value={disease.id}>{disease.name}</option>
+                                    )
+                                }
+
+                            </Form.Control>
+                        </Form.Group>
+
                     </div>
                     <br />
                     <div style={{ maxHeight: '300px', overflow: 'auto' }}>

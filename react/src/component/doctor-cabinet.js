@@ -20,6 +20,7 @@ export default function DoctorCabinet(props) {
     const [diagnosesMap, setDiagnosesMap] = useState([]);
     const [assignmentsMap, setAssignmentsMap] = useState([]);
     const [medicsId, setMedicsId] = useState(-1);
+    const [diseasesMap, setDiseasesMap] = useState([]);
 
     function formDiagnosesMap(patients) {
         let maptempDiagnoses = [];
@@ -30,7 +31,7 @@ export default function DoctorCabinet(props) {
             }
         })
             .map((patient) => {
-   
+
                 patient.treatmentHistory.diagnoses.map(diagnos => {
                     let keyTreamentHistory = patient.treatmentHistory.id + "treatmentHistory";
 
@@ -47,6 +48,8 @@ export default function DoctorCabinet(props) {
                             'diagnosName': diagnos.name,
                             'treatmentHistoriesId': patient.treatmentHistory.id,
                             'patientsId': patient.id,
+                            'patientsCondition': patient.condition,
+                            'patientDiseasesId': patient.diseasesId,
                             'user': patient.user.name + ' ' + patient.user.surname,
                         };
                     });
@@ -66,7 +69,7 @@ export default function DoctorCabinet(props) {
             },
 
         }).then(response => {
-          
+
             if (response.status === 200) {
                 setPatients(response.data);
                 formDiagnosesMap(response.data);
@@ -78,9 +81,32 @@ export default function DoctorCabinet(props) {
         });
     }
 
+    function getDiseases() {
+        axios({
+            'method': 'GET',
+            'url': "http://localhost:8080/online-diagnost/diseases",
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('token')
+            },
+
+        }).then(response => {
+
+            if (response.status === 200) {
+                setDiseasesMap(response.data);
+            }
+
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+
     useEffect(() => {
         if (flag) {
             getPatients();
+            getDiseases();
             setFlag(false);
         }
     });
@@ -95,21 +121,16 @@ export default function DoctorCabinet(props) {
                     </Tab>
 
                     <Tab eventKey="requests" title="Requests">
-                        <Requests patients={patients} medicsId={medicsId} setFlag={setFlag} />
+                        <Requests patients={patients} medicsId={medicsId} setFlag={setFlag}
+                            diseasesMap={diseasesMap} />
                     </Tab>
 
                     <Tab eventKey="assignments" title="Assignments">
                         <Assignments diagnosesMap={diagnosesMap} assignmentsMap={assignmentsMap}
-                            setFlag={setFlag} flag={flag} />
+                            setFlag={setFlag} flag={flag} diseasesMap={diseasesMap} />
                     </Tab>
-
-
                 </Tabs>
             </div>
-
-
-
-
             <Footer />
         </div >
     );

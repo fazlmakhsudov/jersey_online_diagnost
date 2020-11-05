@@ -115,7 +115,7 @@ public class MySQLSymptomRepositoryImpl implements SymptomRepository {
 
     @Override
     public List<SymptomEntity> readForDiseases(int diseasesId, Connection con) throws RepositoryException {
-        final String query = "SELECT * FROM symptoms where medics_id = ?;";
+        final String query = "SELECT * FROM symptoms where diseases_id = ?;";
         List<SymptomEntity> symptomList = new ArrayList<>();
         try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, diseasesId);

@@ -22,10 +22,10 @@ public class Lb3 {
     protected int P; //number of symptoms
     protected final int M; //number of diagnoses
     protected int[] numberSj; // number patiens with symptom concerning whole N
-    protected Map<Double, Double> mProbabilityBi;
-    protected double[] mProbabilitySj;
+    protected Map<Double, Double> probabilityBi;
+    protected double[] probabilitySj;
     // item 2
-    protected Map<Double, double[]> mTableProbalitySijBi;
+    protected Map<Double, double[]> tableProbalitySijBi;
     protected Map<Double, double[][]> mN2iJ;
 
     public Lb3(Connection con, String tableName, double[] patients) {
@@ -34,10 +34,10 @@ public class Lb3 {
         this.diagnozColumn = dbData.get(0).size() - 1;
         initializeSourceData();
         this.M = this.diagnozGroups.size();
-        this.mTableProbalitySijBi = new TreeMap<>();
+        this.tableProbalitySijBi = new TreeMap<>();
         this.mN2iJ = new TreeMap<>();
-        this.mProbabilitySj = new double[this.P];
-        this.mProbabilityBi = new TreeMap<>();
+        this.probabilitySj = new double[this.P];
+        this.probabilityBi = new TreeMap<>();
         this.patients = patients;
         this.patientDiagnos = new TreeMap<>();
         this.diagnoz100 = new TreeMap<>();
@@ -48,7 +48,7 @@ public class Lb3 {
         this.N = this.dbData.size();
         this.dihotomicTable = new double[this.N][this.P];
         this.numberSj = new int[this.P];
-        this.dihotomizaciyaTed();
+        this.getDihotomicData();
         this.diagnozGroups = new TreeMap<>();
         for (int i = 0; i < this.dbData.size(); i++) {
             Double diagnoz = (Double) this.dbData.get(i).get(this.diagnozColumn);
@@ -64,90 +64,29 @@ public class Lb3 {
         try (Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(query)) {
             ResultSetMetaData resultSetMetaData = rs.getMetaData();
-            P = resultSetMetaData.getColumnCount() - 1;
+            P = resultSetMetaData.getColumnCount() - 6;
             while (rs.next()) {
                 List<Object> rowData = new ArrayList<>();
                 for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                     rowData.add(rs.getObject(i));
                 }
                 dbData.add(rowData);
+                System.out.println("**>>>> " + rowData);
             }
         } catch (SQLException e) {
             LOG.severe(e.getMessage());
         }
     }
 
-    protected void dihotomizaciyaTed() {
+    protected void getDihotomicData() {
         System.out.println("\nDihotomic table: ");
-        for (int i = 0; i < this.N; i++) {
-            for (int j = 0; j < this.P; j++) {
-                double value = (double) dbData.get(i).get(j + 1);
-                switch (j) {
-                    case 0:
-                        if (value < 230) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[0]++;
-                        }
-                        break;
-                    case 1:
-                        if (value < 300) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[1]++;
-                        }
-                        break;
-                    case 2:
-                        if (1.5 <= value && value <= 3.5) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[2]++;
-                        }
-                        break;
-                    case 3:
-                        if (0.6 <= value && value <= 1.5) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[3]++;
-                        }
-                        break;
-                    case 4:
-                        if (9.0 <= value && value <= 18.0) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[4]++;
-                        }
-                        break;
-                    case 5:
-                        if (value < 50) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[5]++;
-                        }
-                        break;
-                    case 6:
-                        if (35.0 <= value && value <= 45.0) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[6]++;
-                        }
-                        break;
-                    case 7:
-                        if (12.0 <= value && value <= 14.0) {
-                            this.dihotomicTable[i][j] = 0;
-                        } else {
-                            this.dihotomicTable[i][j] = 1;
-                            this.numberSj[7]++;
-                        }
-                        break;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < P; j++) {
+                double value = (double) dbData.get(i).get(j+5);
+                if (value == 1) {
+                    this.numberSj[j]++;
                 }
+                this.dihotomicTable[i][j] = value;
             }
             System.out.println(Arrays.toString(this.dihotomicTable[i]));
         }
@@ -167,19 +106,19 @@ public class Lb3 {
             this.mN2iJ.put(diagnoz, n2ij);
             // Probability Bi counting
             double temp = (double) this.diagnozGroups.get(diagnoz).size() / this.N;
-            this.mProbabilityBi.put(diagnoz, temp);
+            this.probabilityBi.put(diagnoz, temp);
         }
         // Probability Sj counting
         System.out.println("\nP(Sj) vector:");
         for (int j = 0; j < this.P; j++) {
-            this.mProbabilitySj[j] = (double) this.numberSj[j] / this.N;
-            System.out.println(" Probability Sj: " + this.mProbabilitySj[j]);
+            this.probabilitySj[j] = (double) this.numberSj[j] / this.N;
+            System.out.println(" Probability Sj: " + this.probabilitySj[j]);
         }
         // testing
         System.out.println("\nvectors P(Bi) with Ni of diagnoses, and N2ij arrays:");
         for (Double d : this.mN2iJ.keySet()) {
             System.out.println("diagnos: " + d + " Ni: " + this.diagnozGroups.get(d).size() + " with probability" +
-                    " concerns N: " + this.mProbabilityBi.get(d));
+                    " concerns N: " + this.probabilityBi.get(d));
             for (double[] raw : this.mN2iJ.get(d)) {
                 System.out.print(Arrays.toString(raw) + " ");
             }
@@ -195,15 +134,15 @@ public class Lb3 {
                 raw[j] = this.mN2iJ.get(diagnoz)[j][0] / this.diagnozGroups.get(diagnoz).size();
             }
             System.out.println(diagnoz + "      " + Arrays.toString(raw));
-            this.mTableProbalitySijBi.put(diagnoz, raw);
+            this.tableProbalitySijBi.put(diagnoz, raw);
         }
     }
 
     // table Haminga counting
     protected List<Double> countHamingaDistance(Double patientId, double[] patientDihotomicValues) {
         List<Double> patientDiagnos = new ArrayList<>();
-        for (Double diagnos : this.mTableProbalitySijBi.keySet()) {
-            double[] rawProbalitySijBi = this.mTableProbalitySijBi.get(diagnos);
+        for (Double diagnos : this.tableProbalitySijBi.keySet()) {
+            double[] rawProbalitySijBi = this.tableProbalitySijBi.get(diagnos);
             double sumD = 0d;
             boolean flag = true;
             for (int j = 0; j < rawProbalitySijBi.length; j++) {

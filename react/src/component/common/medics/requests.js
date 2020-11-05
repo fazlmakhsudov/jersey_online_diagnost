@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function Requests(props) {
     let i = 0;
+    let diseasesMap = props.diseasesMap;
     let patients = props.patients;
     const [show, setShow] = useState(false);
     const [name, setName] = useState('');
@@ -12,6 +13,9 @@ export default function Requests(props) {
     const [showCard, setShowCard] = useState(false);
     const [patient, setPatient] = useState({});
     const [response, setResponse] = useState('');
+    const [diseasesId, setDiseasesId] = useState(-1);
+    const [showUpdateSymptom, setShowUpdateSymptom] = useState(false);
+    const [id, setId] = useState(-1);
 
 
     function getDate(number) {
@@ -34,6 +38,25 @@ export default function Requests(props) {
         return year + '' + months;
     }
 
+    function handleUpdateSymptom(patient, symptom) {
+        let treatmentHistory = patient.treatmentHistory;
+        let diagnosesMap = [];
+        if (treatmentHistory && treatmentHistory.diagnoses) {
+            treatmentHistory.diagnoses.map(diagnos =>
+                diagnosesMap.push({
+                    id: diagnos.id,
+                    name: diagnos.name
+                })
+            )
+        }
+        setPatient(patient);
+        setPatientDiagnoses(diagnosesMap);
+        setId(symptom.id);
+        setName(symptom.name);
+        setDiagnosesId(symptom.diagnosesId);
+        setDiseasesId(symptom.diseasesId);
+        setShowUpdateSymptom(true);
+    }
 
     function handlePatientCard(patient) {
         let treatmentHistory = patient.treatmentHistory;
@@ -47,6 +70,7 @@ export default function Requests(props) {
             )
         }
         setPatient(patient);
+        setDiseasesId(patient.diseasesId);
         setPatientDiagnoses(diagnosesMap);
         setResponse('');
         setName('');
@@ -78,6 +102,7 @@ export default function Requests(props) {
                 setName('');
                 setPatient({});
                 setPatientDiagnoses([]);
+                setDiseasesId(-1);
                 props.setFlag(true);
             }
         }).catch(error => {
@@ -134,9 +159,70 @@ export default function Requests(props) {
         });
     }
 
+    function updateSymptom() {
+        let symptomToSend = {
+            id: id,
+            name: name,
+            diagnosesId: diagnosesId,
+            diseasesId: diseasesId
+        };
+
+
+
+        axios({
+            'method': 'PUT',
+            'url': "http://localhost:8080/online-diagnost/symptoms",
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('token')
+            },
+            data: symptomToSend,
+
+        }).then(response => {
+            if (response.status === 200) {
+                setShowUpdateSymptom(false);
+                setName('');
+                setPatient({});
+                setPatientDiagnoses([]);
+                setId(-1);
+                setDiseasesId(-1);
+                setDiagnosesId(-1);
+                props.setFlag(true);
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+    function handleDiseasesIdChangle(diseasesId) {
+        let patientToSend = {
+            id: patient.id,
+            condition: patient.condition,
+            diseasesId: diseasesId
+        };
+        axios({
+            'method': 'PUT',
+            'url': "http://localhost:8080/online-diagnost/patients",
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('token')
+            },
+            data: patientToSend,
+
+        }).then(response => {
+            if (response.status === 200) {
+                console.log('updated patient');
+                setDiseasesId(diseasesId);
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
     return (
         <div>
-
             <Row className='m-5'>
                 <div className='bg-secondary w-100 pl-5 pb-3 pt-3'>
                     <div className='row'>
@@ -181,28 +267,37 @@ export default function Requests(props) {
                     <tbody>
                         {
                             patients.map((patient, index) =>
-                                patient.treatmentHistory.diagnoses.map(diagnos =>
-                                    diagnos.symptoms.map((symptom, index2) =>
-                                        <tr key={index * 2 + index2 * 3}>
-                                            <td>{++i}</td>
-                                            <td>{patient.id}</td>
-                                            <td>{patient.user.name + ' ' + patient.user.surname}</td>
-                                            <td>{calculateAge(patient.user.birthdate)}</td>
+                                patient.treatmentHistory.diagnoses.filter(diagnos => {
 
-                                            <th>Diagnos</th>
-                                            <th>Diasease</th>
+                                    if (diagnos.name === 'no_diagnos') {
 
-                                            <td style={{ whiteSpace: 'pre-wrap', textOverflow: 'ellipsis', maxWidth: '350px' }}>{symptom.name}</td>
-                                            <td>{getDate(symptom.createdDate)}</td>
-                                            <td>{getDate(symptom.updatedDate)}</td>
-                                            <td>
-                                                <Button block variant='outline-primary' onClick={() => {}}>Update</Button>
-                                                <Button block variant='outline-primary' onClick={() => handleMakeAssignment(patient, diagnos.id)}>Make assignment</Button>
-                                                <Button block variant='outline-primary' onClick={() => handlePatientCard(patient)}>Patient card</Button>
-                                            </td>
-                                        </tr>
+                                        return diagnos;
+                                    }
+                                })
+                                    .map(diagnos =>
+                                        diagnos.symptoms.map((symptom, index2) =>
+                                            <tr key={index * 2 + index2 * 3}>
+
+                                                <td>{++i}</td>
+                                                <td>{patient.id}</td>
+                                                <td>{patient.user.name + ' ' + patient.user.surname}</td>
+                                                <td>{calculateAge(patient.user.birthdate)}</td>
+
+                                                <td>{diagnos.name}</td>
+                                                <td>{diseasesMap[symptom.diseasesId] ? diseasesMap[symptom.diseasesId].name : symptom.diseasesid}</td>
+
+                                                <td style={{ whiteSpace: 'pre-wrap', textOverflow: 'ellipsis', maxWidth: '350px' }}>{symptom.name}</td>
+                                                <td>{getDate(symptom.createdDate)}</td>
+                                                <td>{getDate(symptom.updatedDate)}</td>
+                                                <td>
+                                                    <Button block variant='outline-primary' onClick={() => handlePatientCard(patient)}>Patient card</Button>
+                                                    <Button block variant='outline-primary' onClick={() => handleMakeAssignment(patient, diagnos.id)}>Make assignment</Button>
+
+                                                    <Button block variant='outline-primary' onClick={() => handleUpdateSymptom(patient, symptom)}>Update</Button>
+                                                </td>
+                                            </tr>
+                                        )
                                     )
-                                )
                             )
                         }
                     </tbody>
@@ -244,6 +339,52 @@ export default function Requests(props) {
                 </Modal.Footer>
             </Modal>
 
+            <Modal show={showUpdateSymptom} onHide={() => setShowUpdateSymptom(false)} animation={true}>
+                <Modal.Header closeButton>
+                    <Modal.Title className="display-4">Update form</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Group className='justify-content-center'>
+                        <Form.Label>Symptom's description</Form.Label>
+                        <Form.Control as="textarea" rows={6} name='name' value={name}
+                            minLength='15' readOnly />
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Diagnos</Form.Label>
+                        <Form.Control as="select" value={diagnosesId} onChange={(e) => setDiagnosesId(e.target.value)}>
+
+                            {
+                                patientDiagnoses.map((diagnos, index) =>
+                                    <option key={index} value={diagnos.id}>{diagnos.name}</option>
+                                )
+                            }
+
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Disease</Form.Label>
+                        <Form.Control as="select" value={diseasesId} onChange={(e) => setDiseasesId(e.target.value)}>
+
+                            {
+                                Object.values(diseasesMap).map((disease, index) =>
+                                    <option key={index} value={disease.id}>{disease.name}</option>
+                                )
+                            }
+
+                        </Form.Control>
+                    </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowUpdateSymptom(false)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => updateSymptom()} >
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             <Modal show={showCard} onHide={() => setShowCard(false)} animation={true}>
                 <Modal.Header closeButton>
@@ -260,7 +401,19 @@ export default function Requests(props) {
                     </div>
                     <div className='row'>
                         <span className='col-5 pl-3' >Disease:  </span>
-                        <span className='col-7 bg-danger'> select/ plus button</span>
+
+                        <Form.Group className='col-7'>
+                            <Form.Control as="select" value={diseasesId} onChange={(e) => handleDiseasesIdChangle(e.target.value)}>
+
+                                {
+                                    Object.values(diseasesMap).map((disease, index) =>
+                                        <option key={index} value={disease.id}>{disease.name}</option>
+                                    )
+                                }
+
+                            </Form.Control>
+                        </Form.Group>
+
                     </div>
 
                     <br />

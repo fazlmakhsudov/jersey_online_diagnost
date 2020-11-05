@@ -37,4 +37,16 @@ public class SymptomResourse {
         int rowInserted = symptomService.add(new SymptomDomainBuilder().create(symptomRequestModel));
         return rowInserted > 0 ? Response.ok().build() : Response.serverError().build();
     }
+
+    @SneakyThrows
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateSymptom(SymptomRequestModel symptomRequestModel) {
+        System.out.println("0--------------00");
+        System.out.println(symptomRequestModel);
+        SymptomService symptomService = (SymptomService) ServiceFactory.createService(ServiceType.SYMPTOM_SERVICE);
+        boolean flag = symptomService.save(new SymptomDomainBuilder().create(symptomRequestModel));
+        return flag ? Response.ok().build() : Response.serverError().build();
+    }
 }
