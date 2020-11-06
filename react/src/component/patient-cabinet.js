@@ -74,13 +74,13 @@ export default function PatientCabinet(props) {
                     </Tab>
 
                     <Tab eventKey="treatmenthistory" title="Treatment history" className='container mt-5'>
-                        <TreatmentHistory treatmentHistory={treatmentHistory}/>
+                        <TreatmentHistory treatmentHistory={treatmentHistory} setFlag={setFlag} />
                     </Tab>
                     <Tab eventKey="diagnoses" title="Diagnoses" className='container mt-5'>
-                        <Diagnoses diagnoses={diagnoses} />
+                        <Diagnoses diagnoses={diagnoses} setFlag={setFlag} />
                     </Tab>
                     <Tab eventKey="assignments" title="Assignments" className='container mt-5'>
-                        <Assignments diagnoses={diagnoses} />
+                        <Assignments diagnoses={diagnoses} setFlag={setFlag} />
                     </Tab>
                     <Tab eventKey="symptoms" title="Symptoms" className='container mt-5'>
                         <Symptoms treatmentHistory={treatmentHistory} setFlag={setFlag} />

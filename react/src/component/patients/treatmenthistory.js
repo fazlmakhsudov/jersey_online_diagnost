@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Table } from 'react-bootstrap';
+import { Row, Col, Table, Button } from 'react-bootstrap';
 
 
 
@@ -15,7 +15,18 @@ export default function TreatmentHistory(props) {
     return (
         <div>
             <div className='bg-secondary w-100 mb-5'>
-                <h2 className='pt-4 pb-2 text-center'>The Treatment History</h2>
+                {/* <h2 className='pt-4 pb-2 text-center'>The Treatment History</h2> */}
+                
+                <div className='bg-secondary w-100 pl-5 pb-3 pt-3'>
+                    <div className='row'>
+                        <div className='col-7 text-right'>
+                            <h2>The Treatment History</h2>
+                        </div>
+                        <div className='col-5 text-right'>
+                            <Button variant='outline-light' className='w-25 mr-5' size='lg' onClick={() => props.setFlag(true)}><span className='text-primary h5'>Refresh</span></Button>
+                        </div>
+                    </div>
+                </div>
                 <Row>
                     <Col sm={2}></Col>
                     <Col sm={3}>

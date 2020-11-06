@@ -43,6 +43,21 @@ public class Lb3 {
         this.diagnoz100 = new TreeMap<>();
     }
 
+    public Lb3(Connection con, String tableName) {
+        dbData = new ArrayList<>();
+        getDataFromDb(con, tableName);
+        this.diagnozColumn = dbData.get(0).size() - 1;
+        initializeSourceData();
+        this.M = this.diagnozGroups.size();
+        this.tableProbalitySijBi = new TreeMap<>();
+        this.mN2iJ = new TreeMap<>();
+        this.probabilitySj = new double[this.P];
+        this.probabilityBi = new TreeMap<>();
+        this.patients = new double[] {1d};
+        this.patientDiagnos = new TreeMap<>();
+        this.diagnoz100 = new TreeMap<>();
+    }
+
     protected void initializeSourceData() {
 
         this.N = this.dbData.size();
@@ -71,7 +86,6 @@ public class Lb3 {
                     rowData.add(rs.getObject(i));
                 }
                 dbData.add(rowData);
-                System.out.println("**>>>> " + rowData);
             }
         } catch (SQLException e) {
             LOG.severe(e.getMessage());
@@ -88,7 +102,7 @@ public class Lb3 {
                 }
                 this.dihotomicTable[i][j] = value;
             }
-            System.out.println(Arrays.toString(this.dihotomicTable[i]));
+//            System.out.println(Arrays.toString(this.dihotomicTable[i]));
         }
     }
 
@@ -109,31 +123,31 @@ public class Lb3 {
             this.probabilityBi.put(diagnoz, temp);
         }
         // Probability Sj counting
-        System.out.println("\nP(Sj) vector:");
+//        System.out.println("\nP(Sj) vector:");
         for (int j = 0; j < this.P; j++) {
             this.probabilitySj[j] = (double) this.numberSj[j] / this.N;
-            System.out.println(" Probability Sj: " + this.probabilitySj[j]);
+//            System.out.println(" Probability Sj: " + this.probabilitySj[j]);
         }
         // testing
-        System.out.println("\nvectors P(Bi) with Ni of diagnoses, and N2ij arrays:");
+//        System.out.println("\nvectors P(Bi) with Ni of diagnoses, and N2ij arrays:");
         for (Double d : this.mN2iJ.keySet()) {
-            System.out.println("diagnos: " + d + " Ni: " + this.diagnozGroups.get(d).size() + " with probability" +
-                    " concerns N: " + this.probabilityBi.get(d));
+//            System.out.println("diagnos: " + d + " Ni: " + this.diagnozGroups.get(d).size() + " with probability" +
+//                    " concerns N: " + this.probabilityBi.get(d));
             for (double[] raw : this.mN2iJ.get(d)) {
-                System.out.print(Arrays.toString(raw) + " ");
+//                System.out.print(Arrays.toString(raw) + " ");
             }
-            System.out.println();
+//            System.out.println();
         }
     }
 
     public void countProbablitySijBi() {
-        System.out.println("\nTable of P(Sij/Bi): ");
+//        System.out.println("\nTable of P(Sij/Bi): ");
         for (Double diagnoz : this.mN2iJ.keySet()) {
             double[] raw = new double[this.P];
             for (int j = 0; j < this.P; j++) {
                 raw[j] = this.mN2iJ.get(diagnoz)[j][0] / this.diagnozGroups.get(diagnoz).size();
             }
-            System.out.println(diagnoz + "      " + Arrays.toString(raw));
+//            System.out.println(diagnoz + "      " + Arrays.toString(raw));
             this.tableProbalitySijBi.put(diagnoz, raw);
         }
     }
@@ -182,6 +196,20 @@ public class Lb3 {
         }
     }
 
+    public void predictDiagnosesForPatient(double []  symptoms) {
+
+        double patientId = this.patients[0];
+            this.diagnoz100.put(patientId, false);
+            double[] patientDihotomicValues = symptoms;
+            this.patientDiagnos.put(patientId, this.countHamingaDistance(patientId, patientDihotomicValues));
+
+        // testing
+        System.out.println("\n Diagnos prediction: ");
+
+        System.out.println("patient: " + patientId + " has been set diagnoses: " + this.patientDiagnos.get(patientId) + " 100% " + this.diagnoz100.get(patientId));
+
+    }
+
     public static void main(String[] args) throws SQLException {
 
 
@@ -191,8 +219,7 @@ public class Lb3 {
         Lb3 flb3 = new Lb3(con, "statistic_data", new double[]{1, 2});
         flb3.countN2iJ();
         flb3.countProbablitySijBi();
-        flb3.predictDiagnosesForPatients();
+        flb3.predictDiagnosesForPatient(new double[] {0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0});
 //        System.setOut(STD_OUT);
-
     }
 }

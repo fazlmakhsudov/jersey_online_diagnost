@@ -1,7 +1,168 @@
-import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Table } from 'react-bootstrap';
+import axios from 'axios';
+
 
 export default function ContactForm(props) {
+    const [flag, setFlag] = useState(true);
+    const [questions, setQuestions] = useState([]);
+    const [answer, setAnswer] = useState([]);
+    const [showQuestionFlag, setShowQuestionFlag] = useState(true);
+    const [validateFlag, setValidateFlag] = useState(false);
+    const [response, setResponse] = useState('');
+
+    async function handleSubmit() {
+        let questionsToSend = formQuestionsRequest();
+
+
+        axios({
+            'method': 'POST',
+            'url': "http://localhost:8080/online-diagnost/diagnoster",
+            'headers': {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                email: sessionStorage.getItem('email') ? sessionStorage.getItem('email') : 'unauthorised',
+                questions: questionsToSend
+            },
+
+        }).then(response => {
+
+            if (response.status === 200) {
+                console.log(response.data);
+                setAnswer(response.data);
+                setShowQuestionFlag(false);
+            } else {
+                setResponse('Unfortunately, the diagnosis is certain. Try to highlight only significant symptoms.');
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+
+    function getQuestionary() {
+        axios({
+            'method': 'GET',
+            'url': 'http://localhost:8080/online-diagnost/questionaries',
+            'headers': {
+                'Content-Type': 'application/json',
+            },
+
+
+        }).then(response => {
+            if (response.status === 200) {
+                setQuestions(response.data.questions);
+            }
+        }).catch(error => {
+            alert('It has appeared \n' + error);
+            console.log(error);
+        });
+    }
+
+    function formQuestionsRequest() {
+        let questionsToSend = [];
+        questions.map(question => {
+            let questionRequest = {
+                id: question.id,
+                name: question.name,
+                answer: question.answer,
+                questionariesId: question.questionariesId
+            }
+            questionsToSend.push(questionRequest);
+        });
+        console.log(questionsToSend);
+        return questionsToSend;
+    }
+
+    function formRequestHtml() {
+        return <div className="contact-top1">
+            <h5 className="sub-title-wthree text-center">request form</h5>
+            <Form className="pc-contact">
+                {
+                    questions.map((question, index) =>
+                        <Form.Check className="ml-5 mt-4" key={index} custom type='checkbox' id={`checkbox` + index} label={question.name} onClick={() => {
+                            questions[index].answer === 'true' ? questions[index].answer = 'false' : questions[index].answer = 'true';
+
+                            setQuestions(questions);
+                            setValidateFlag(validate());
+                            setResponse('');
+                        }} autoFocus />
+                    )
+                }
+                <div className="text-left mt-4">
+                    <Button variant='outline-secondary' className='ml-5' type='reset' onClick={() => {
+                        questions.map(question => question.answer = 'false');
+                        setQuestions(questions);
+                    }} style={{ minWidth: '25%' }}>Clear</Button>
+                    <Button variant='outline-primary' className='ml-2' onClick={() => handleSubmit()} style={{ minWidth: '25%' }}
+                        disabled={!validateFlag}>Send</Button>
+                </div>
+            </Form>
+            <div className='mt-3'>
+                <h6 className='text-danger'>{response}</h6>
+            </div>
+        </div>
+    }
+
+    function validate() {
+        let isTrueNumber = 0;
+        questions.map(question => {
+            if (question.answer === "true") {
+                isTrueNumber++;
+            }
+        });
+        return isTrueNumber >= 2;
+    }
+
+    function formResponseHtml() {
+        let i = 0;
+        return <div className="contact-top1">
+            <h5 className="sub-title-wthree text-center">Prediction</h5>
+            <div>
+                <Table responsive="md">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Diagnos</th>
+                            <th>Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            answer.map((diagnos, index) =>
+                                <tr key={index}>
+                                    <td>{++i}</td>
+                                    <td>{diagnos.diseaseName}</td>
+                                    <td>{Number(diagnos.probability * 100).toFixed(2) + ' percent'}</td>
+                                </tr>
+                            )
+                        }
+
+
+                    </tbody>
+                </Table>
+            </div>
+            <div className="text-left mt-4">
+
+                <Button variant='outline-primary' className='ml-2' onClick={() => {
+                    questions.map(question => question.answer = 'false');
+                    setQuestions(questions);
+                    setShowQuestionFlag(true);
+                    setValidateFlag(false);
+                }} style={{ minWidth: '25%' }}>Make another request</Button>
+            </div>
+        </div>
+    }
+
+    useEffect(() => {
+        if (flag) {
+            getQuestionary();
+            setFlag(false);
+        }
+    });
+
     return (
         <section className="wthree-row pt-3 pb-lg-5 w3-contact">
             <div className="container py-sm-5 pt-0 pb-5">
@@ -61,19 +222,11 @@ export default function ContactForm(props) {
                     {/* <!-- //contact details --> */}
                     <div className="col-lg-8 wthree-form-left px-lg-5 mt-lg-0 mt-5">
                         {/* <!-- contact form grid --> */}
-                        <div className="contact-top1">
-                            <h5 className="sub-title-wthree text-center">request form</h5>
-                            <Form className="pc-contact">
-                                <Form.Check className="text-center mt-4 mb-3" custom type='checkbox' id={`custom-checkbox1`} label={`Conditional question 1`} />
-                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox2`} label={`Conditional question 2`} />
-                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox3`} label={`Conditional question 3`} />
-                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox4`} label={`Conditional question 4`} />
-                                <Form.Check className="text-center mb-3" custom type='checkbox' id={`custom-checkbox5`} label={`Conditional question 5`} />
-                                <Form.Check  className="text-center mb-3" custom type='checkbox' id={`custom-checkbox6`} label={`Conditional question 6`} />
-                                <div className="text-center"><Button  style={{minWidth:'30%'}}>Send</Button></div>
-                            </Form>
 
-                        </div>
+                        {
+                            showQuestionFlag ? formRequestHtml() : formResponseHtml()
+                        }
+
                         {/* <!--  //contact form grid ends here --> */}
                     </div>
                 </div>

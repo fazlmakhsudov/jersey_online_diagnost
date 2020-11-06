@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Table } from 'react-bootstrap';
+import { Row, Table, Button } from 'react-bootstrap';
 
 
 export default function Assignments(props) {
@@ -16,7 +16,14 @@ export default function Assignments(props) {
             
             <Row>
                 <div className='bg-secondary w-100 pl-5 pb-3 pt-3'>
-                    <h2 >The Assignments</h2>
+                    <div className='row'>
+                        <div className='col-6'>
+                            <h2>The Assignments</h2>
+                        </div>
+                        <div className='col-6 text-right'>
+                            <Button variant='outline-light' className='w-25 mr-5' size='lg' onClick={() => props.setFlag(true)}><span className='text-primary h5'>Refresh</span></Button>
+                        </div>
+                    </div>
                 </div>
 
                 <Table striped bordered hover>
