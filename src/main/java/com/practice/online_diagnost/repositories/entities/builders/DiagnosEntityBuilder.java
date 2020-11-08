@@ -5,7 +5,6 @@ import com.practice.online_diagnost.repositories.entities.DiagnosEntity;
 import com.practice.online_diagnost.services.domains.DiagnosDomain;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DiagnosEntityBuilder {

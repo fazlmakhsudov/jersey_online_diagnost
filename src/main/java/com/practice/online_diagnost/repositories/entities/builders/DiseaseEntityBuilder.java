@@ -5,7 +5,6 @@ import com.practice.online_diagnost.repositories.entities.DiseaseEntity;
 import com.practice.online_diagnost.services.domains.DiseaseDomain;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DiseaseEntityBuilder {

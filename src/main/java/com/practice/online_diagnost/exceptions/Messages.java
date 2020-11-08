@@ -129,6 +129,17 @@ public final class Messages {
     public static final String ERR_CANNOT_COUNT_ALL_QUESTIONS = "Cannot count all questions";
     public static final String ERR_CANNOT_READ_QUESTIONS_WITH_LIMITATION = "Cannot read questions with limitation";
 
+    // diagnoster response entity exceptions
+    public static final String ERR_CANNOT_INSERT_DIAGNOSTER_RESPONSE = "Cannot insert new diagnoster response";
+    public static final String ERR_CANNOT_OBTAIN_DIAGNOSTER_RESPONSE_BY_ID = "Cannot obtain a diagnoster response by its id";
+    public static final String ERR_CANNOT_OBTAIN_DIAGNOSTER_RESPONSE_BY_NAME = "Cannot obtain a diagnoster response by its name";
+    public static final String ERR_CANNOT_UPDATE_DIAGNOSTER_RESPONSE = "Cannot update a diagnoster response";
+    public static final String ERR_CANNOT_DELETE_DIAGNOSTER_RESPONSE = "Cannot delete new diagnoster response";
+    public static final String ERR_CANNOT_READ_ALL_DIAGNOSTER_RESPONSES = "Cannot read all diagnoster responses";
+    public static final String ERR_CANNOT_COUNT_ALL_DIAGNOSTER_RESPONSES = "Cannot count all diagnoster responses";
+    public static final String ERR_CANNOT_READ_DIAGNOSTER_RESPONSES_WITH_LIMITATION = "Cannot read diagnoster responses with limitation";
+
+
     // service layer exceptions
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_ID = "Cannot obtain a user by its id at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_EMAIL = "Cannot obtain a user by its email at service layer";
@@ -219,6 +230,14 @@ public final class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_DELETE_QUESTION = "Cannot delete new question at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_QUESTIONS = "Cannot read all questions at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_READ_QUESTIONS_WITH_LIMITATION = "Cannot read questions with limitation at service layer";
+
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_DIAGNOSTER_RESPONSE_BY_ID = "Cannot obtain a diagnoster response by its id at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_DIAGNOSTER_RESPONSE_BY_NAME = "Cannot obtain a diagnoster response by its name at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_DIAGNOSTER_RESPONSE = "Cannot insert new diagnoster response at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_UPDATE_DIAGNOSTER_RESPONSE = "Cannot update a diagnoster response at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_DELETE_DIAGNOSTER_RESPONSE = "Cannot delete new diagnoster response at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_DIAGNOSTER_RESPONSES = "Cannot read all diagnoster responses at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_READ_DIAGNOSTER_RESPONSES_WITH_LIMITATION = "Cannot read diagnoster responses with limitation at service layer";
 
 
     //Extractor exceptions

@@ -1,19 +1,17 @@
 package com.practice.online_diagnost.api.resources.v1;
 
 import com.practice.online_diagnost.api.filters.Secured;
-import com.practice.online_diagnost.api.models.AssignmentRequestModel;
 import com.practice.online_diagnost.api.models.DiagnosRequestModel;
-import com.practice.online_diagnost.api.models.builders.DiagnosResponseModelBuilder;
-import com.practice.online_diagnost.services.AssignmentService;
 import com.practice.online_diagnost.services.DiagnosService;
-import com.practice.online_diagnost.services.domains.DiagnosDomain;
-import com.practice.online_diagnost.services.domains.builders.AssignmentDomainBuilder;
 import com.practice.online_diagnost.services.domains.builders.DiagnosDomainBuilder;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
 import lombok.SneakyThrows;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.Logger;

@@ -210,8 +210,8 @@ public class Lb4 extends Lb3 {
         item2dot2ForOnePatient();
     }
 
-    public Map<Integer, Double> getPrediction () {
-        Map<Integer,Double> answer = probabilityBiDmx.get(patients[0])
+    public Map<Integer, Double> getPrediction() {
+        Map<Integer, Double> answer = probabilityBiDmx.get(patients[0])
                 .entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().intValue(),
                         entry -> Double.valueOf(String.format("%.3f", entry.getValue()))));

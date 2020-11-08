@@ -1,19 +1,16 @@
 package com.practice.online_diagnost.api.resources.v1;
 
 import com.practice.online_diagnost.api.filters.Secured;
-import com.practice.online_diagnost.api.models.AssignmentRequestModel;
 import com.practice.online_diagnost.api.models.PatientRequestModel;
 import com.practice.online_diagnost.api.models.PatientResponseModel;
-import com.practice.online_diagnost.api.models.TreatmentHistoryResponseModel;
 import com.practice.online_diagnost.api.models.builders.PatientResponseModelBuilder;
-import com.practice.online_diagnost.api.models.builders.TreatmentHistoryResponseModelBuilder;
 import com.practice.online_diagnost.exceptions.ServiceException;
-import com.practice.online_diagnost.services.*;
+import com.practice.online_diagnost.services.PatientService;
+import com.practice.online_diagnost.services.TokenServiceImpl;
+import com.practice.online_diagnost.services.UserService;
 import com.practice.online_diagnost.services.domains.DiagnosDomain;
 import com.practice.online_diagnost.services.domains.PatientDomain;
-import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
 import com.practice.online_diagnost.services.domains.UserDomain;
-import com.practice.online_diagnost.services.domains.builders.AssignmentDomainBuilder;
 import com.practice.online_diagnost.services.domains.builders.PatientDomainBuilder;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;
@@ -69,11 +66,8 @@ public class PatientResourse {
                 && userDomain.getMedicsId() == medicId) {
             patientDomains = patientService.findAll();
             patientDomains = patientDomains.stream().filter(patientDomain -> {
-                if (Objects.isNull(patientDomain.getTreatmentHistory())
-                        || Objects.isNull(patientDomain.getUserDomain())){
-                    return false;
-                }
-                return true;
+                return !Objects.isNull(patientDomain.getTreatmentHistory())
+                        && !Objects.isNull(patientDomain.getUserDomain());
             }).collect(Collectors.toList());
         }
         LOG.info("getPatients() ends");
@@ -106,7 +100,7 @@ public class PatientResourse {
                         List<DiagnosDomain> diagnosDomains = patientDomain.getTreatmentHistory().getDiagnoses();
                         diagnosDomains = diagnosDomains.stream()
                                 .filter(diagnosDomain -> diagnosDomain.getName().equals("no_diagnos"))
-                                .collect(Collectors.toList());;
+                                .collect(Collectors.toList());
                         patientDomain.getTreatmentHistory().setDiagnoses(diagnosDomains);
                         return patientDomain;
                     }).collect(Collectors.toList());

@@ -5,7 +5,10 @@ import com.practice.online_diagnost.diagnoster.file_handlers.DBInfo;
 import com.practice.online_diagnost.diagnoster.file_handlers.DBUtil;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 public class Lb3 {
@@ -53,7 +56,7 @@ public class Lb3 {
         this.mN2iJ = new TreeMap<>();
         this.probabilitySj = new double[this.P];
         this.probabilityBi = new TreeMap<>();
-        this.patients = new double[] {1d};
+        this.patients = new double[]{1d};
         this.patientDiagnos = new TreeMap<>();
         this.diagnoz100 = new TreeMap<>();
     }
@@ -96,7 +99,7 @@ public class Lb3 {
         System.out.println("\nDihotomic table: ");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < P; j++) {
-                double value = (double) dbData.get(i).get(j+5);
+                double value = (double) dbData.get(i).get(j + 5);
                 if (value == 1) {
                     this.numberSj[j]++;
                 }
@@ -196,12 +199,12 @@ public class Lb3 {
         }
     }
 
-    public void predictDiagnosesForPatient(double []  symptoms) {
+    public void predictDiagnosesForPatient(double[] symptoms) {
 
         double patientId = this.patients[0];
-            this.diagnoz100.put(patientId, false);
-            double[] patientDihotomicValues = symptoms;
-            this.patientDiagnos.put(patientId, this.countHamingaDistance(patientId, patientDihotomicValues));
+        this.diagnoz100.put(patientId, false);
+        double[] patientDihotomicValues = symptoms;
+        this.patientDiagnos.put(patientId, this.countHamingaDistance(patientId, patientDihotomicValues));
 
         // testing
         System.out.println("\n Diagnos prediction: ");
@@ -219,7 +222,7 @@ public class Lb3 {
         Lb3 flb3 = new Lb3(con, "statistic_data", new double[]{1, 2});
         flb3.countN2iJ();
         flb3.countProbablitySijBi();
-        flb3.predictDiagnosesForPatient(new double[] {0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0});
+        flb3.predictDiagnosesForPatient(new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0});
 //        System.setOut(STD_OUT);
     }
 }

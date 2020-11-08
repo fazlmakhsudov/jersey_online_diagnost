@@ -14,7 +14,7 @@ public class DiagnosDomainBuilder {
         return DiagnosDomain.builder()
                 .id(diagnosModel.getId())
                 .name(Objects.isNull(diagnosModel.getName())
-                        ? "" :  diagnosModel.getName())
+                        ? "" : diagnosModel.getName())
                 .treatmentHistoriesId(diagnosModel.getTreatmentHistoriesId())
                 .build();
     }

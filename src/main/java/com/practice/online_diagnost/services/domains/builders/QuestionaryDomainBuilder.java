@@ -14,7 +14,7 @@ public class QuestionaryDomainBuilder {
         return QuestionaryDomain.builder()
                 .id(questionaryModel.getId())
                 .name(Objects.isNull(questionaryModel.getName()) ?
-                        "" :questionaryModel.getName())
+                        "" : questionaryModel.getName())
 
                 .build();
     }

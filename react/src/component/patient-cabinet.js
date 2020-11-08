@@ -13,6 +13,7 @@ import Assignments from './patients/assignments.js';
 import Footer from './common/footer.js';
 import { Row, Col, Tab, Tabs } from 'react-bootstrap';
 import axios from 'axios';
+import DiagnosterHistory from './patients/diagnoster-history.js';
 
 
 export default function PatientCabinet(props) {
@@ -86,7 +87,7 @@ export default function PatientCabinet(props) {
                         <Symptoms treatmentHistory={treatmentHistory} setFlag={setFlag} />
                     </Tab>
                     <Tab eventKey="diagnoster" title="Diagnosting history" className='container mt-5'>
-                        Here will be the results of all testing
+                        <DiagnosterHistory />
                     </Tab>
                 </Tabs>
             </div>

@@ -2,7 +2,6 @@ package com.practice.online_diagnost.api.resources.v1;
 
 import com.practice.online_diagnost.api.filters.Secured;
 import com.practice.online_diagnost.api.models.AssignmentRequestModel;
-import com.practice.online_diagnost.api.models.TestRequestModel;
 import com.practice.online_diagnost.services.AssignmentService;
 import com.practice.online_diagnost.services.domains.builders.AssignmentDomainBuilder;
 import com.practice.online_diagnost.services.factory.ServiceFactory;

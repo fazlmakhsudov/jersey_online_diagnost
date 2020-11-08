@@ -16,20 +16,20 @@ public class UserDomainBuilder {
                 .name(Objects.isNull(userModel.getName()) ?
                         "" : userModel.getName())
                 .surname(Objects.isNull(userModel.getSurname()) ?
-                        "" :userModel.getSurname())
+                        "" : userModel.getSurname())
                 .email(Objects.isNull(userModel.getEmail()) ?
-                        "" :userModel.getEmail())
+                        "" : userModel.getEmail())
                 .password(Objects.isNull(userModel.getPassword()) ?
-                        "" :userModel.getPassword())
+                        "" : userModel.getPassword())
                 .phone(Objects.isNull(userModel.getPhone()) ?
-                        "" :userModel.getPhone())
+                        "" : userModel.getPhone())
                 .medicsId(userModel.getMedicsId())
                 .patientsId(userModel.getPatientsId())
                 .rolesId(userModel.getRolesId())
                 .gender(!Objects.isNull(userModel.getGender()) && userModel.getGender().equalsIgnoreCase("female") ?
                         "female" : "male")
                 .location(Objects.isNull(userModel.getLocation()) ?
-                        "" :userModel.getLocation())
+                        "" : userModel.getLocation())
                 .birthdate(Objects.isNull(userModel.getBirthdate()) ?
                         Date.valueOf("2012-12-12") : userModel.getBirthdate())
                 .build();

@@ -1,4 +1,4 @@
-package com.practice.online_diagnost.api.models;
+package com.practice.online_diagnost.repositories.entities;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.sql.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiagnosterResponseModel {
+public class DiagnosterResponseEntity {
     private String diseaseName;
     private double probability;
     private int patientsId;

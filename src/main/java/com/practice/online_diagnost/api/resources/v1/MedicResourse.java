@@ -1,18 +1,16 @@
 package com.practice.online_diagnost.api.resources.v1;
 
 import com.practice.online_diagnost.api.filters.Secured;
-import com.practice.online_diagnost.api.models.MedicResponseModel;
 import com.practice.online_diagnost.api.models.PatientResponseModel;
-import com.practice.online_diagnost.api.models.TreatmentHistoryResponseModel;
 import com.practice.online_diagnost.api.models.builders.MedicResponseModelBuilder;
 import com.practice.online_diagnost.api.models.builders.PatientResponseModelBuilder;
-import com.practice.online_diagnost.api.models.builders.TreatmentHistoryResponseModelBuilder;
 import com.practice.online_diagnost.exceptions.ServiceException;
-import com.practice.online_diagnost.repositories.entities.MedicEntity;
-import com.practice.online_diagnost.services.*;
+import com.practice.online_diagnost.services.MedicService;
+import com.practice.online_diagnost.services.PatientService;
+import com.practice.online_diagnost.services.TokenServiceImpl;
+import com.practice.online_diagnost.services.UserService;
 import com.practice.online_diagnost.services.domains.MedicDomain;
 import com.practice.online_diagnost.services.domains.PatientDomain;
-import com.practice.online_diagnost.services.domains.TreatmentHistoryDomain;
 import com.practice.online_diagnost.services.domains.UserDomain;
 import com.practice.online_diagnost.services.factory.ServiceFactory;
 import com.practice.online_diagnost.services.factory.ServiceType;

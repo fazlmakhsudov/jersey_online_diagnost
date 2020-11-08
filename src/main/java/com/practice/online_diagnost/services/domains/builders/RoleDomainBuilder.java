@@ -13,7 +13,7 @@ public class RoleDomainBuilder {
         return RoleDomain.builder()
                 .id(roleModel.getId())
                 .name(Objects.isNull(roleModel.getName()) ?
-                        ""  : roleModel.getName())
+                        "" : roleModel.getName())
                 .build();
     }
 

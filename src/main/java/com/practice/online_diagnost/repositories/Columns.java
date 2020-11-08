@@ -9,8 +9,8 @@ public class Columns {
 
     //public columns' names
     public static final String DIAGNOSES_ID = "diagnoses_id";
-    public static final String MEDICS_ID = "medics_Id";
-    public static final String PATIENTS_ID = "patients_Id";
+    public static final String MEDICS_ID = "medics_id";
+    public static final String PATIENTS_ID = "patients_id";
 
     public static final String TREATMENT_HISTORIES_ID = "treatment_histories_id";
     public static final String SPECIALIZATION = "specialization";
@@ -26,5 +26,8 @@ public class Columns {
     public static final String LOCATION = "location";
     public static final String BIRTHDATE = "birth_date";
     public static final String CONDITION = "condition";
+    public static final String DISEASE_NAME = "disease_name";
+    public static final String PROBABILITY = "probability";
+    public static final String SYMPTOMS = "symptoms";
 
 }
